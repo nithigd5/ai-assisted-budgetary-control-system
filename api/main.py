@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-from models.train import Train
+from routers import purchases
 
 app = FastAPI()
 
-@app.get("/")
-def hello_world():
-    return {"message": "OK"}
+app.include_router(purchases.router, prefix="/purchases", tags=["purchases"])
 
-@app.get("/train")
-def train():
-    return {"success": True, "message": "Started Training model", "status": Train().train()}
+
+@app.get("/")
+async def root():
+    return {"message": "Underdevelopment"}
