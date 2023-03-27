@@ -1,10 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, json
+from datetime import datetime
+
+from requests.ProductRequest import ProductRequest
 
 
-class Product(BaseModel):
-    id: int
-    name: str
-    created_at: int
-    updated_at: int
-    minPrice: float
-    maxPrice: float
+class Product(ProductRequest):
+    id: int | None
+
+    class Config:
+        orm_mode = True
