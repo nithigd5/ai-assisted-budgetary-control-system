@@ -1,12 +1,10 @@
 from datetime import datetime
 
-from pydantic import BaseModel
-
 from models.Product import Product
-from requests.PurchaseRequest import PurchaseRequest
+from requests.ExpenseRequest import BaseRequest
 
 
-class Purchase(BaseModel):
+class Expense(BaseRequest):
     id: int
     price: float
     feedback: str | None

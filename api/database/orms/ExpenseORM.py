@@ -1,23 +1,27 @@
 from sqlalchemy import Column, Integer, String, TIMESTAMP, FetchedValue, text, Float, Text, JSON, ForeignKey, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session, selectinload
-from database.engine import Base, engine
+from database.db import engine
+from database.orms.Base import Base
 from database.orms.ProductORM import ProductORM
-from models.Purchase import Purchase
+from database.orms.UserORM import UserORM
+from models.Expense import Expense
 
 
-def all_purchases():
+def all_expenses():
     session = Session(engine)
 
-    purchases = session.execute(select(PurchaseORM).options(selectinload(PurchaseORM.product))).all()
+    purchases = session.execute(select(ExpenseORM).options(selectinload(ExpenseORM.product))).all()
 
-    return list(map(lambda p: Purchase.from_orm(p[0]), purchases))
+    return list(map(lambda p: Expense.from_orm(p[0]), purchases))
 
 
-class PurchaseORM(Base):
-    __tablename__ = "purchases"
+class ExpenseORM(Base):
+    __tablename__ = "expenses"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column("user_id", ForeignKey("users.id"), nullable=False)
+    user: Mapped["UserORM"] = relationship()
     product_id = Column("product_id", ForeignKey("products.id"), nullable=False)
     product: Mapped["ProductORM"] = relationship()
     purchased_at = Column(TIMESTAMP, server_default=text("NOW()"))
