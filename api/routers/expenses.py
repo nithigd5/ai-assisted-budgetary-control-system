@@ -5,8 +5,8 @@ from fastapi import APIRouter, Body
 from database.db import session
 from database.orms.ExpenseORM import ExpenseORM, all_expenses
 from models.Expense import Expense
-from requests.ExpenseFromText import ExpenseFromText
-from requests.ExpenseRequest import ExpenseRequest
+from request_validators.ExpenseFromText import ExpenseFromText
+from request_validators.ExpenseRequest import ExpenseRequest
 
 router = APIRouter()
 

@@ -1,5 +1,5 @@
 from models.User import User
-from requests.UserIncomeRequest import UserIncomeRequest
+from request_validators.UserIncomeRequest import UserIncomeRequest
 
 
 class UserIncome(UserIncomeRequest):

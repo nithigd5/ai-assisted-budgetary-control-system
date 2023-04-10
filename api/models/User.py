@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import Field
 
-from requests.UserRequest import UserRequest
+from request_validators.UserRequest import UserRequest
 
 
 class User(UserRequest):

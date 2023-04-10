@@ -1,5 +1,5 @@
 from models.User import User
-from requests.UserBudgetRequest import UserBudgetRequest
+from request_validators.UserBudgetRequest import UserBudgetRequest
 
 
 class UserBudget(UserBudgetRequest):

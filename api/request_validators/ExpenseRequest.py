@@ -10,7 +10,7 @@ from database.orms.ProductORM import ProductORM
 class BaseRequest(BaseModel):
     price: float = Field(gt=0, title="Product Price")
     feedback: str | None = Field(default=None, title="Feedback about the purchase")
-    extra: Json[Any] | None = Field(title="Extra json data")
+    extra: Json[dict] | None = Field(title="Extra json data")
     purchased_at: datetime = Field(default=datetime.now(), title="When did you purchase this ?")
 
 

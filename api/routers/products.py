@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from database.db import session
 from database.orms.ProductORM import ProductORM, all_products
 from models.Product import Product
-from requests.ProductRequest import ProductRequest
+from request_validators.ProductRequest import ProductRequest
 
 router = APIRouter()
 

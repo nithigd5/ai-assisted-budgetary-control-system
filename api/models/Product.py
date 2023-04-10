@@ -1,7 +1,7 @@
 from pydantic import BaseModel, json, Field
 from datetime import datetime
 
-from requests.ProductRequest import ProductRequest
+from request_validators.ProductRequest import ProductRequest
 
 
 class Product(ProductRequest):

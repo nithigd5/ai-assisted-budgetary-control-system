@@ -12,4 +12,4 @@ class ProductRequest(BaseModel):
     type: str | None = Field(title="What is the type of product ?")
     daily_use: bool | None = Field(default=False, title="does this product bought frequently ?")
     feedback: str | None = Field(default=None, title="Feedback about the purchase")
-    extra: Json[Any] | None = Field(title="Extra json data")
+    extra: Json[dict] | None = Field(title="Extra json data")
