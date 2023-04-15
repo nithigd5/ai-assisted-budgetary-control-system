@@ -8,9 +8,6 @@ from database.orms.Base import Base
 from models.Product import Product
 
 
-# from database.orms.PurchaseORM import PurchaseORM
-
-
 def all_products():
     session = Session(engine)
     return list(map(lambda p: Product.from_orm(p[0]), session.execute(select(ProductORM)).all()))
@@ -30,5 +27,7 @@ class ProductORM(Base):
     feedback = Column(Text, nullable=True)
     extra = Column(JSON, nullable=True)
 
-    # purchases: Mapped[List] = relationship(back_populates="purchases")
+    expenses: Mapped[List["ExpenseORM"]] = relationship(back_populates="product")
 
+from database.orms.ExpenseORM import ExpenseORM
+ProductORM.update_forward_refs()
