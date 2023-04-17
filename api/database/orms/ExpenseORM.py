@@ -5,6 +5,7 @@ from database.db import engine
 from database.orms.Base import Base
 from database.orms.UserORM import UserORM
 from models.Expense import Expense
+from database.orms.ProductORM import ProductORM
 
 
 def all_expenses():
@@ -22,11 +23,8 @@ class ExpenseORM(Base):
     user_id = Column("user_id", ForeignKey("users.id"), nullable=False)
     user: Mapped["UserORM"] = relationship()
     product_id = Column("product_id", ForeignKey("products.id"), nullable=False)
-    product: Mapped["ProductORM"] = relationship(back_populates="expenses")
+    product: Mapped["ProductORM"] = relationship()
     purchased_at = Column(TIMESTAMP, server_default=text("NOW()"))
     price = Column(Float)
     feedback = Column(Text, nullable=True)
     extra = Column(JSON, nullable=True)
-
-from database.orms.ProductORM import ProductORM
-ExpenseORM.update_forward_refs()
