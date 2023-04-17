@@ -4,6 +4,12 @@ services:
       context: api
 #      target: builder
     container_name: fastapi-application
+    environment:
+      - "DB_PASSWORD=${DB_PASSWORD}"
+      - "DB_USERNAME=${DB_USERNAME}"
+      - "DB_DATABASE=${DB_DATABASE}"
+      - "DB_HOST=${DB_HOST}"
+      - "DB_PORT=${DB_PORT}"
     volumes:
       - './api:/app'
     ports:
