@@ -27,7 +27,7 @@ class ProductORM(Base):
     feedback = Column(Text, nullable=True)
     extra = Column(JSON, nullable=True)
 
-    expenses: Mapped[List["ExpenseORM"]] = relationship(back_populates="product")
+    # expenses: Mapped[List["ExpenseORM"]] = relationship(back_populates="product")
 
-from database.orms.ExpenseORM import ExpenseORM
-ProductORM.update_forward_refs()
+# from database.orms.ExpenseORM import ExpenseORM
+# ProductORM.update_forward_refs()
