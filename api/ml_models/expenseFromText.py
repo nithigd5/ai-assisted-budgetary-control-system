@@ -38,4 +38,4 @@ def extract(text):
                 data['product'] = {}
                 data['product']['type'] = ent.text
 
-    print(json.dumps(data, indent=4))
+    return data
