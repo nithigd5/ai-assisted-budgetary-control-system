@@ -3,9 +3,9 @@ from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session, selectinload
 from database.db import engine
 from database.orms.Base import Base
-from database.orms.ProductORM import ProductORM
 from database.orms.UserORM import UserORM
 from models.Expense import Expense
+from database.orms.ProductORM import ProductORM
 
 
 def all_expenses():

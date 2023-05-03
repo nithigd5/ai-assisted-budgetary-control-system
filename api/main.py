@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-
 from routers import expenses, products, users, auth
+from database import migrate
 
 app = FastAPI()
 
