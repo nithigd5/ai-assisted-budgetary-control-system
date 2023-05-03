@@ -14,7 +14,8 @@
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <script href="{{ asset('js/jquery.easing-1.4.1.min.js') }}" rel="stylesheet"></script>
-    <script href="{{ asset('js/jquery.min.js') }}" rel="stylesheet"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
