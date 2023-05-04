@@ -30,6 +30,27 @@ services:
       - "postgres:/var/lib/postgresql/data"
     ports:
       - "${DB_PORT}:5432"
+  web:
+    build:
+      context: app
+    volumes:
+      -   "./app:/app"
+    environment:
+      - "DB_PASSWORD=${DB_PASSWORD}"
+      - "DB_USERNAME=${DB_USERNAME}"
+      - "DB_DATABASE=${DB_DATABASE}"
+      - "DB_HOST=${DB_HOST}"
+      - "DB_CONNECTION=pgsql"
+      - "DB_PORT=${DB_PORT}"
+    ports:
+      - "80:80"
+      - "2222:22"
+      - "4000:4000"
+    depends_on:
+      -   "pgsql"
+    links:
+      -   "pgsql:${DB_HOST}"
+
 
 volumes:
   postgres: { }

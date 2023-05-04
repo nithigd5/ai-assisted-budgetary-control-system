@@ -3,7 +3,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
+            <img src="/assets/img/logo.png" alt="">
             <span class="d-none d-lg-block">Budget Tracker</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -118,7 +118,7 @@
 
                     <li class="message-item">
                         <a href="#">
-                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                            <img src="/assets/img/messages-1.jpg" alt="" class="rounded-circle">
                             <div>
                                 <h4>Maria Hudson</h4>
                                 <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -132,7 +132,7 @@
 
                     <li class="message-item">
                         <a href="#">
-                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                            <img src="/assets/img/messages-2.jpg" alt="" class="rounded-circle">
                             <div>
                                 <h4>Anna Nelson</h4>
                                 <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -146,7 +146,7 @@
 
                     <li class="message-item">
                         <a href="#">
-                            <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                            <img src="/assets/img/messages-3.jpg" alt="" class="rounded-circle">
                             <div>
                                 <h4>David Muldon</h4>
                                 <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -169,7 +169,7 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                    <img src="/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span>
                 </a><!-- End Profile Iamge Icon -->
 
@@ -242,23 +242,18 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" data-bs-target="#tickets-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>Tickets</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="tickets-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-progress.html">
-                        <i class="bi bi-circle"></i><span>Progress</span>
+                    <a href="{{ route('tickets.index') }}">
+                        <i class="bi bi-circle"></i><span>Track All</span>
                     </a>
                 </li>
                 <li>
-                    <a href="components-spinners.html">
-                        <i class="bi bi-circle"></i><span>Spinners</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-tooltips.html">
-                        <i class="bi bi-circle"></i><span>Tooltips</span>
+                    <a href="{{ route('tickets.create') }}">
+                        <i class="bi bi-circle"></i><span>Raise New</span>
                     </a>
                 </li>
             </ul>
