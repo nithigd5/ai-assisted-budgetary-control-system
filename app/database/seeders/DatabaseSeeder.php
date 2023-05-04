@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
                 'title' => fake()->sentence, 'created_at' => now(), 'updated_at' => now(),
                 'message' => fake()->paragraph(2),
                 'user_id' => $user->id,
-                'assigned_to' => fake()->randomElement($users)->id
+                'assigned_to' => $user->id == ($id = fake()->randomElement([1,2])) ? $user->id + 1 : $id
             ]));
         }
     }

@@ -243,22 +243,39 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tickets-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Tickets</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-question-circle"></i><span>Tickets</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="tickets-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="tickets-nav" class="nav-content collapse {{ request()->routeIs('tickets.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{{ route('tickets.index') }}">
-                        <i class="bi bi-circle"></i><span>Track All</span>
+                    <a href="{{ route('tickets.index') }}" class="{{ request()->routeIs('tickets.index') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Track Mines</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('tickets.create') }}">
+                    <a href="{{ route('tickets.assigned') }}" class="{{ request()->routeIs('tickets.assigned') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Assigned to Me</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('tickets.create') }}" class="{{ request()->routeIs('tickets.create') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Raise New</span>
                     </a>
                 </li>
             </ul>
         </li><!-- End Components Nav -->
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-gem"></i><span>Features</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('features.index') }}" class="{{ request()->routeIs('features.index') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>View All</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">

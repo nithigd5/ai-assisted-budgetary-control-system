@@ -35,10 +35,15 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(TicketingController::class)->prefix('tickets')->name('tickets.')->group(function (){
         Route::get('/', 'index')->name('index');
+        Route::get('/assigned', 'assigned')->name('assigned');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{ticket}/update', 'update')->name('update');
         Route::put('/{ticket}/reply', 'reply')->name('reply');
         Route::get('/{ticket}', 'show')->name('show');
+    });
+
+    Route::controller(\App\Http\Controllers\FeatureController::class)->prefix('features')->name('features.')->group(function (){
+        Route::get('/', 'index')->name('index');
     });
 });

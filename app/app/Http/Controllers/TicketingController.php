@@ -20,6 +20,14 @@ class TicketingController extends Controller
         return view('tickets.index', compact('tickets'));
     }
 
+    public function assigned(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $tickets = Ticket::query()->where('assigned_to', auth()->id())->paginate(5);
+
+        return view('tickets.index', compact('tickets'));
+    }
+
+
     public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $users = User::all();
