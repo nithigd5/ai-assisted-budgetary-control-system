@@ -85,7 +85,6 @@
                                     <button class="btn btn-primary" type="submit">Submit form</button>
                                 </div>
                             </form><!-- End Custom Styled Validation with Tooltips -->
-
                         </div>
                     </div>
                 </div>

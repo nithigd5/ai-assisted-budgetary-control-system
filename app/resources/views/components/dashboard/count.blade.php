@@ -26,7 +26,7 @@
                 <div class="ps-3">
                     <h6>{{ $count }}</h6>
                     {{ $slot }}
-                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+{{--                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>--}}
                 </div>
             </div>
         </div>
