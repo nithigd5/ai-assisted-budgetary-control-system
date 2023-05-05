@@ -12,6 +12,7 @@ class TicketingSystem
      */
     public function resolve(User $user): mixed
     {
-        return false;
+        dd($user);
+        return $user->id == 2;
     }
 }

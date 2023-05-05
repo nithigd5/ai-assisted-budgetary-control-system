@@ -2,7 +2,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="{{ route('home') }}" class="logo d-flex align-items-center">
             <img src="/assets/img/logo.png" alt="">
             <span class="d-none d-lg-block">Budget Tracker</span>
         </a>
@@ -241,11 +241,17 @@
             </a>
         </li><!-- End Dashboard Nav -->
 
-        <li class="nav-item">
+
+          <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tickets-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-question-circle"></i><span>Tickets</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tickets-nav" class="nav-content collapse {{ request()->routeIs('tickets.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('tickets.overall') }}" class="{{ request()->routeIs('tickets.overall') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Overall</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('tickets.index') }}" class="{{ request()->routeIs('tickets.index') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Track Mines</span>

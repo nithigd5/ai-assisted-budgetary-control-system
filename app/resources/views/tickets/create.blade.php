@@ -6,8 +6,7 @@
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Raise New Tickets</h1>
-        <p class="mb-4">For more information about Tickets Queries, please contact the <a target="_blank"
-                                                                                          href="#">hr@mallow-tech.com</a>.
+        <p class="mb-4">For more information about Tickets Queries, please contact us.
         </p>
 
         <section class="section">
@@ -61,6 +60,27 @@
                                         @error('priority') {{ $message }} @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-12 position-relative">
+                                    <label for="category" class="form-label">Category</label>
+                                    <input type="text" class="form-control @error('category') is-invalid @enderror" name="category" id="category"
+                                           value="{{ old('category') }}">
+
+                                    <div class="invalid-tooltip">
+                                        @error('title') {{ $message }} @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 position-relative">
+                                    <label for="label" class="form-label">Label</label>
+                                    <input type="text" class="form-control @error('label') is-invalid @enderror" name="label" id="label"
+                                           value="{{ old('label') }}">
+
+                                    <div class="invalid-tooltip">
+                                        @error('title') {{ $message }} @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <button class="btn btn-primary" type="submit">Submit form</button>
                                 </div>

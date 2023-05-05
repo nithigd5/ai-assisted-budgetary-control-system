@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(TicketingController::class)->prefix('tickets')->name('tickets.')->group(function (){
         Route::get('/', 'index')->name('index');
+        Route::get('/overall', 'overall')->name('overall');
         Route::get('/assigned', 'assigned')->name('assigned');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\TicketingSystem;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Pennant\Feature;
 
 class HomeController extends Controller
 {

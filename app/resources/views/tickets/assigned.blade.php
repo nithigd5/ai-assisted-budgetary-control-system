@@ -6,8 +6,7 @@
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Track Tickets</h1>
-        <p class="mb-4">For more information about Tickets Queries, please contact the <a target="_blank"
-                                                                                          href="#">hr@mallow-tech.com</a>.
+        <p class="mb-4">For more information about Tickets Queries, please contact us.
         </p>
         <section class="section">
             <div class="row">

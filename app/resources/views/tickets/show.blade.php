@@ -6,14 +6,22 @@
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Raise New Tickets</h1>
-        <p class="mb-4">For more information about Tickets Queries, please contact the <a target="_blank"
-                                                                                          href="#">hr@mallow-tech.com</a>.
+        <p class="mb-4">For more information about Tickets Queries, please contact us.
         </p>
 
         <div class="card">
             <div class="card-header">
-                <div class="d-flex justify-content-between">
-                    <div>Ticket Raised By <span class="fw-bold text-black">{{ $ticket->user->name }}</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        @if($ticket->isOpen())
+                            <span class="badge bg-primary"><i class="bi bi-bell-fill me-1"></i>Open</span>
+                        @elseif($ticket->isClosed())
+                            <span class="badge bg-success"><i class="bi bi-check-circle-fill me-1"></i>Closed</span>
+                        @else
+                            <span
+                                class="badge bg-secondary">{{ strtoupper($ticket->status) }}</span>
+                        @endif
+                        Ticket Raised By <span class="fw-bold text-black">{{ $ticket->user->name }}</span>
                         on <i class="text-black">{{ $ticket->created_at->toFormattedDateString() }}</i></div>
                     <div>
                         @if($ticket->priority == 'high')
@@ -26,14 +34,6 @@
                                     class="bi bi-info-circle me-1"></i> Low Priority</span>
                         @endif
 
-                        @if($ticket->isOpen())
-                            <span class="badge bg-primary">Open</span>
-                        @elseif($ticket->isClosed())
-                            <span class="badge bg-success">Closed</span>
-                        @else
-                            <span
-                                class="badge bg-secondary">{{ strtoupper($ticket->status) }}</span>
-                        @endif
 
                         @if($ticket->isResolved())
                             <span class="badge badge-pill bg-success"><i
@@ -48,8 +48,13 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="card-title">
+                <div class="card-title d-flex justify-content-between">
                     {{ $ticket->title }}
+                    @foreach($ticket->categories->pluck('name') as $category)
+                        <div class="d-flex align-items-center badge px-3 bg-info">
+                            <div class="fs-6 fw-normal">{{ $category }}</div>
+                        </div>
+                    @endforeach
                 </div>
                 <div>
                     <p>{{ $ticket->message }}</p>
@@ -76,36 +81,48 @@
                     </div>
                 </div>
             </div>
-            <div class="footer px-2 d-flex gap-2">
-                <div class="dropdown">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Change Priority
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'priority' => 'high']) }}"
-                               class="dropdown-item text-danger"><i
-                                    class="bi bi-bell me-1"></i>High</a></li>
-                        <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'priority' => 'normal']) }}"
-                               class="dropdown-item text-info"><i
-                                    class="bi bi-exclamation me-1"></i>Normal</a></li>
-                        <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'priority' => 'low']) }}"
-                               class="dropdown-item text-secondary"><i
-                                    class="bi bi-info me-1"></i>Low</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Assign To
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        @foreach($users as $user)
-                        <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'assigned_to' => $user->id]) }}"
-                               class="dropdown-item"><i
-                                    class="bi bi-p1"></i>{{ $user->name }}</a></li>
-                        @endforeach
-                    </ul>
+            <div class="footer px-2 d-flex justify-content-between">
+                <div class="d-flex gap-2 ">
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            Change Priority
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'priority' => 'high']) }}"
+                                   class="dropdown-item text-danger"><i
+                                        class="bi bi-bell me-1"></i>High</a></li>
+                            <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'priority' => 'normal']) }}"
+                                   class="dropdown-item text-info"><i
+                                        class="bi bi-exclamation me-1"></i>Normal</a></li>
+                            <li><a href="{{ route('tickets.update', ['ticket' => $ticket, 'priority' => 'low']) }}"
+                                   class="dropdown-item text-secondary"><i
+                                        class="bi bi-info me-1"></i>Low</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            Assign To
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            @foreach($users as $user)
+                                <li>
+                                    <a href="{{ route('tickets.update', ['ticket' => $ticket, 'assigned_to' => $user->id]) }}"
+                                       class="dropdown-item"><i
+                                            class="bi bi-p1"></i>{{ $user->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
 
+                <div class="d-flex gap-2">
+                    @foreach($ticket->labels->pluck('name') as $label)
+                        <div class="d-flex align-items-center px-3 badge bg-primary">
+                            <div class="fs-6 fw-normal">{{ $label }}</div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
 
