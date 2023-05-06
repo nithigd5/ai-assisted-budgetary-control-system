@@ -104,6 +104,7 @@
                                     </div>
                                     <div class="ps-3">
                                         <button data-bs-toggle="modal" data-bs-target="#add-expense" type="button" class="btn btn-primary">Add Expense</button>
+                                        <button type="button" id="speak-expense" class="btn btn-primary" data-listening="false"><i class="bi bi-mic-fill"></i></button>
                                     </div>
 
                                 </div>
@@ -415,4 +416,61 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $("#speak-expense").on('click', function (){
+
+            var speechBtn = $(this)
+
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+
+            // This runs when the speech recognition service starts
+            recognition.onstart = function() {
+                speechBtn.data('listening', true)
+                speechBtn.html('<i class="bi bi-stop-circle-fill"></i>');
+            };
+
+            recognition.onspeechend = function() {
+                // when user is done speaking
+                speechBtn.html('<i class="bi bi-mic-fill"></i>')
+                speechBtn.data('listening', false)
+                recognition.stop();
+            }
+
+            // This runs when the speech recognition service returns result
+            recognition.onresult = function(event) {
+                let transcript = event.results[0][0].transcript;
+                let confidence = event.results[0][0].confidence;
+
+                extractData(transcript)
+            };
+
+            if(speechBtn.data('listening'))
+            {
+                recognition.stop();
+            }else{
+                recognition.start();
+            }
+        })
+
+        function extractData(text)
+        {
+            console.log(text)
+            $.ajax({
+                url: '{{ route('nlp.extract') }}',
+                method: 'POST',
+                data: {text},
+                success: function (res){
+                    console.log(res)
+                },
+                error: function (res){
+                    console.log(res)
+                }
+            });
+        }
+    </script>
 @endsection

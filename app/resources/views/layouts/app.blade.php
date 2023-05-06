@@ -13,6 +13,8 @@
     <link href="/assets/img/favicon.png" rel="icon">
     <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <script href="{{ asset('js/jquery.easing-1.4.1.min.js') }}" rel="stylesheet"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -70,8 +72,19 @@
 <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="/assets/vendor/php-email-form/validate.js"></script>
 
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
+
+@yield('scripts')
 
 </body>
 
