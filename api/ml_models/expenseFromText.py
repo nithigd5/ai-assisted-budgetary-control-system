@@ -1,41 +1,33 @@
 import spacy
+from spacy.matcher import Matcher
+
 
 nlp = spacy.load("en_core_web_sm")
-doc = nlp("I purchased a product with id 21 for $500. It was good. The product was created on 2023-03-27T21:26:31.010000 and updated on 2023-03-27T21:26:31.010000. It belongs to Category and is of type Category. The minimum price is $12 and the maximum price is $233. It is used daily.")
-print(dict(doc))
-for token in doc:
-    print(token.text, token.pos_, token.dep_, token.label_)
 
 def extract(text):
+    # Define the matcher pattern to extract product information
+    matcher = Matcher(nlp.vocab)
+    product = [{"LEMMA" : {"IN": ["purchase", "buy"]}}, {"POS": {"IN": ["PROPN", "NOUN"]}, "OP": "+"}]
+    money = [{"POS": "NUM"}]
+    location = [{"LEMMA": {"IN": ["at", "from", "in"]}}, {"POS": {"IN": ["NOUN", "PROPN"]}, "OP": "+"}]
+    matcher.add("PRODUCT", [product])
+    matcher.add("MONEY", [ money])
+    matcher.add("LOCATION", [location])
+
+    # Process the text with the matcher
     doc = nlp(text)
-    print(dict(doc))
-    for token in doc:
-      print(token.text, token.pos_, token.dep_, token.label_)
+    matches = matcher(doc)
 
-    data = {}
+    expense = {}
 
-    for ent in doc.ents:
-        if ent.label_ == 'DATE':
-            if 'purchased_at' not in data:
-                data['purchased_at'] = ent.text
-        elif ent.label_ == 'MONEY':
-            if 'price' not in data:
-                data['price'] = float(ent.text.replace('$', ''))
-        elif ent.label_ == 'CARDINAL':
-            if 'id' not in data:
-                data['id'] = int(ent.text)
-            elif 'product' not in data:
-                data['product'] = {}
-                data['product']['id'] = int(ent.text)
-        elif ent.label_ == 'ORG':
-            if 'product' not in data:
-                data['product'] = {}
-                data['product']['category'] = ent.text
-            elif 'feedback' not in data:
-                data['feedback'] = ent.text
-        elif ent.label_ == 'PERSON':
-            if 'product' not in data:
-                data['product'] = {}
-                data['product']['type'] = ent.text
+    for (match_id, start, end) in matches:
+      if match_id == nlp.vocab.strings["PRODUCT"]:
+        expense["product"] = ' '.join(doc[start:end].text.split(' ')[1:-1])
 
-    return data
+      if match_id == nlp.vocab.strings['MONEY']:
+        expense['price'] = doc[start:end].text
+
+      if match_id == nlp.vocab.strings['LOCATION']:
+        expense['mode'] = ' '.join(doc[start:end].text.split(' ')[1:])
+
+    return expense

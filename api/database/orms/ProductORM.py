@@ -22,9 +22,10 @@ class ProductORM(Base):
     min_price = Column(Float)
     max_price = Column(Float)
     category = Column(String)
-    type = Column(String)
-    daily_use = Column(Boolean)
-    feedback = Column(Text, nullable=True)
+    name = Column(String)
+    description = Column(Text, nullable=True)
+    type = Column(String, nullable=True)
+    brand = Column(String, nullable=True)
     extra = Column(JSON, nullable=True)
 
     # expenses: Mapped[List["ExpenseORM"]] = relationship(back_populates="product")

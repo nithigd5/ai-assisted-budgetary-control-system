@@ -17,9 +17,11 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('users');
             $table->foreignId('user_id')->constrained('users');
             $table->float('price');
-            $table->float('mode');
+            $table->string('mode');
             $table->float('type');
-            $table->float('feedback');
+            $table->string('feedback');
+            $table->string('emotion_score');
+            $table->json('extra');
         });
     }
 

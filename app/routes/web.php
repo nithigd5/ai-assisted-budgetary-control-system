@@ -47,4 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\FeatureController::class)->prefix('features')->name('features.')->group(function (){
         Route::get('/', 'index')->name('index');
     });
+
+    Route::controller(\App\Http\Controllers\NLPController::class)->prefix('nlp')->name('nlp.')->group(function (){
+        Route::post('extract', 'extract')->name('extract');
+    });
 });

@@ -25,7 +25,6 @@ async def store(expenses: ExpenseRequest):
 
 @router.post('/from-text')
 async def store(expense: ExpenseFromText):
-
     return extract(expense.text)
 
 @router.get('/', response_model=list[Expense])
