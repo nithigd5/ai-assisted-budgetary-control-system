@@ -1,4 +1,4 @@
-<?php
+->nullable(<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('users');
             $table->foreignId('user_id')->constrained('users');
             $table->float('price');
-            $table->string('mode');
-            $table->string('type');
-            $table->string('feedback');
+            $table->string('mode')->nullable();
+            $table->string('type')->nullable();
+            $table->string('feedback')->nullable();
         });
     }
 

@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('category');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->float('min_price');
             $table->float('max_price');
-            $table->string('brand');
-            $table->json('extra');
+            $table->string('brand')->nullable();
+            $table->json('extra')->nullable();
         });
     }
 
