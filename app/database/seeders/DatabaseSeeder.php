@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Product;
 use App\Models\User;
 use Coderflex\LaravelTicket\Models\Ticket;
 use Illuminate\Database\Seeder;
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ameen',
             'email' => 'ameen@email.com',
         ]);
+
+        Product::factory(10)->create();
 
         \App\Models\User::factory(10)->create();
 

@@ -18,10 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->float('price');
             $table->string('mode');
-            $table->float('type');
+            $table->string('type');
             $table->string('feedback');
-            $table->string('emotion_score');
-            $table->json('extra');
         });
     }
 

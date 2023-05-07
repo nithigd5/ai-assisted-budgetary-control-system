@@ -10,6 +10,12 @@
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
         </nav>
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success !</strong> {{session()->get('success')}}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
@@ -18,11 +24,9 @@
             <!-- Left side columns -->
             <div class="col-lg-12">
                 <div class="row">
-
                     <!-- Budget Card -->
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card sales-card">
-
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -46,7 +50,7 @@
                                     <div class="ps-3">
                                         <h6>$2,264</h6>
                                         <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                                class="text-muted small pt-2 ps-1">increase</span>
 
                                     </div>
                                 </div>
@@ -82,12 +86,10 @@
                                     <div class="ps-3">
                                         <h6>$3,264</h6>
                                         <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                                class="text-muted small pt-2 ps-1">increase</span>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div><!-- End Spent Card -->
 
@@ -104,7 +106,6 @@
                                     </div>
                                     <div class="ps-3">
                                         <button data-bs-toggle="modal" data-bs-target="#add-expense" type="button" class="btn btn-primary">Add Expense</button>
-                                        <button type="button" id="speak-expense" class="btn btn-primary" data-listening="false"><i class="bi bi-mic-fill"></i></button>
                                     </div>
 
                                 </div>
@@ -217,7 +218,7 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Product</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Mode of Payment</th>
                                         <th scope="col">Mood</th>
@@ -305,7 +306,7 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Preview</th>
-                                        <th scope="col">Product</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Price</th>
                                     </tr>
                                     </thead>
@@ -351,126 +352,192 @@
     </section>
 
     <div class="modal fade" id="add-expense" tabindex="-1" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Expense</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3" action="{{ route('tickets.store') }}" method="POST" novalidate="">
+                    <form id="expense-form" class="row g-3" action="{{ route('expense.store') }}" method="POST">
                         @csrf
-                        <div class="col-12 position-relative">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title"
-                                   value="{{ old('title') }}">
 
-                            <div class="invalid-tooltip">
-                                @error('title') {{ $message }} @enderror
-                            </div>
-                        </div>
                         <div class="col-12 position-relative">
-                            <label for="message" class="form-label @error('message') is-invalid @enderror">Description</label>
-                            <textarea rows="4" class="form-control" id="message" name="message">{{ old('description') }}</textarea>
-                            <div class="invalid-tooltip">
-                                @error('message') {{ $message }} @enderror
-                            </div>
-                        </div>
-                        <div class="col-12 position-relative">
-                            <label for="priority" class="form-label">Priority</label>
-                            <select type="text" class="form-control @error('priority') is-invalid @enderror" name="priority" id="priority" required="">
-                                <option value="low">Low</option>
-                                <option value="normal">Normal</option>
-                                <option value="high">High</option>
+                            <label for="product" class="form-label">
+                                Name
+                                <button type="button" class="ms-1 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#productModal">
+                                    Add Product
+                                </button>
+                            </label>
+                            <select required class="products-select2 form-select @error('product') is-invalid @enderror" name="product" id="product">
+                                <option>Select An Option</option>
+                                @foreach($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                @endforeach
                             </select>
                             <div class="invalid-tooltip">
-                                @error('priority') {{ $message }} @enderror
+                                @error('product') {{ $message }} @enderror
                             </div>
                         </div>
 
                         <div class="col-12 position-relative">
-                            <label for="category" class="form-label">Category</label>
-                            <input type="text" class="form-control @error('category') is-invalid @enderror" name="category" id="category"
-                                   value="{{ old('category') }}">
+                            <label for="price" class="form-label">Price</label>
+                            <input required type="number" class="form-control @error('price') is-invalid @enderror" name="price" id="price"
+                                   value="{{ old('price') }}">
 
                             <div class="invalid-tooltip">
-                                @error('title') {{ $message }} @enderror
+                                @error('price') {{ $message }} @enderror
                             </div>
                         </div>
 
                         <div class="col-12 position-relative">
-                            <label for="label" class="form-label">Label</label>
-                            <input type="text" class="form-control @error('label') is-invalid @enderror" name="label" id="label"
-                                   value="{{ old('label') }}">
+                            <label for="mode" class="form-label">Mode</label>
+                            <input required type="text" class="form-control @error('mode') is-invalid @enderror" name="mode" id="mode"
+                                   value="{{ old('mode') }}">
 
                             <div class="invalid-tooltip">
-                                @error('title') {{ $message }} @enderror
+                                @error('mode') {{ $message }} @enderror
                             </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="type" class="form-label">Type</label>
+                            <input required type="text" class="form-control @error('type') is-invalid @enderror" name="type" id="type"
+                                   value="{{ old('type') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('type') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="feedback" class="form-label">Feedback</label>
+                            <input required type="text" class="form-control @error('feedback') is-invalid @enderror" name="feedback" id="feedback"
+                                   value="{{ old('feedback') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('feedback') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="productModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="expense-form" class="row g-3" action="{{ route('product.store') }}" method="POST">
+                        @csrf
+                        <div class="col-12 position-relative">
+                            <label for="price" class="form-label">Name</label>
+                            <input required type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
+                                   value="{{ old('name') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('name') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="price" class="form-label">Description</label>
+                            <input required type="text" class="form-control @error('description') is-invalid @enderror" name="description" id="description"
+                                   value="{{ old('description') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('description') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="mode" class="form-label">Category</label>
+                            <input required type="text" class="form-control @error('category') is-invalid @enderror" name="category" id="category"
+                                   value="{{ old('category') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('category') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="type" class="form-label">Type</label>
+                            <input required type="text" class="form-control @error('type') is-invalid @enderror" name="type" id="type"
+                                   value="{{ old('type') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('type') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="min_price" class="form-label">Min Price</label>
+                            <input required type="number" class="form-control @error('min_price') is-invalid @enderror" name="min_price" id="min_price"
+                                   value="{{ old('min_price') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('min_price') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="max_price" class="form-label">Max Price</label>
+                            <input required type="text" class="form-control @error('max_price') is-invalid @enderror" name="max_price" id="max_price"
+                                   value="{{ old('max_price') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('max_price') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="feedback" class="form-label">Brand</label>
+                            <input required type="text" class="form-control @error('brand') is-invalid @enderror" name="brand" id="brand"
+                                   value="{{ old('brand') }}">
+
+                            <div class="invalid-tooltip">
+                                @error('brand') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-@endsection
 
-@section('scripts')
-    <script>
-        $("#speak-expense").on('click', function (){
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                $('.products-select2').select2({
+                    dropdownParent: $('#add-expense'),
+                    width: '100%',
+                });
 
-            var speechBtn = $(this)
-
-            // new speech recognition object
-            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-            var recognition = new SpeechRecognition();
-
-            // This runs when the speech recognition service starts
-            recognition.onstart = function() {
-                speechBtn.data('listening', true)
-                speechBtn.html('<i class="bi bi-stop-circle-fill"></i>');
-            };
-
-            recognition.onspeechend = function() {
-                // when user is done speaking
-                speechBtn.html('<i class="bi bi-mic-fill"></i>')
-                speechBtn.data('listening', false)
-                recognition.stop();
-            }
-
-            // This runs when the speech recognition service returns result
-            recognition.onresult = function(event) {
-                let transcript = event.results[0][0].transcript;
-                let confidence = event.results[0][0].confidence;
-
-                extractData(transcript)
-            };
-
-            if(speechBtn.data('listening'))
-            {
-                recognition.stop();
-            }else{
-                recognition.start();
-            }
-        })
-
-        function extractData(text)
-        {
-            console.log(text)
-            $.ajax({
-                url: '{{ route('nlp.extract') }}',
-                method: 'POST',
-                data: {text},
-                success: function (res){
-                    console.log(res)
-                },
-                error: function (res){
-                    console.log(res)
-                }
+                $('form').submit(function(e){
+                    // e.preventDefault();
+                    console.log("Hello");
+                });
             });
-        }
-    </script>
+        </script>
+    @endpush
+
 @endsection

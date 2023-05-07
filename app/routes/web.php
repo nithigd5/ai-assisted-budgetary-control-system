@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketingController;
 use App\Http\Controllers\UserController;
@@ -33,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::controller(TicketingController::class)->prefix('tickets')->name('tickets.')->group(function (){
+    Route::controller(TicketingController::class)->prefix('tickets')->name('tickets.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/overall', 'overall')->name('overall');
         Route::get('/assigned', 'assigned')->name('assigned');
@@ -44,11 +46,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/{ticket}', 'show')->name('show');
     });
 
-    Route::controller(\App\Http\Controllers\FeatureController::class)->prefix('features')->name('features.')->group(function (){
+    Route::controller(\App\Http\Controllers\FeatureController::class)->prefix('features')->name('features.')->group(function () {
         Route::get('/', 'index')->name('index');
     });
 
-    Route::controller(\App\Http\Controllers\NLPController::class)->prefix('nlp')->name('nlp.')->group(function (){
-        Route::post('extract', 'extract')->name('extract');
-    });
+    Route::post('/expense', [ExpenseController::class, 'store'])->name('expense.store');
+    Route::post('/product', [ProductController::class, 'store'])->name('product.store');
 });

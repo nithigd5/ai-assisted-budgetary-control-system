@@ -28,7 +28,24 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'product' => 'required',
+            'price' => 'required',
+            'mode' => 'required',
+            'type' => 'required',
+            'feedback' => 'required'
+        ]);
+
+        Expense::create([
+            'product_id' => $request->input('product'),
+            'user_id' => auth()->id(),
+            'price' => $request->input('price'),
+            'mode' => $request->input('mode'),
+            'type' => $request->input('type'),
+            'feedback' => $request->input('feedback')
+        ]);
+
+        return redirect('/home')->with('success','Expense Created Successfully');
     }
 
     /**
