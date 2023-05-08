@@ -43,13 +43,14 @@
                                 <h5 class="card-title">Budget <span>| This Month</span></h5>
 
                                 <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>$2,264</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        {{--                                        <span class="text-success small pt-1 fw-bold">12%</span> <span--}}
+                                        {{--                                            class="text-muted small pt-2 ps-1">increase</span>--}}
 
                                     </div>
                                 </div>
@@ -84,9 +85,9 @@
                                         <i class="bi bi-currency-dollar"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$3,264</h6>
+                                        <h6>${{ $totalExpenses }}</h6>
                                         <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                            class="text-muted small pt-2 ps-1">Decrease</span>
                                     </div>
                                 </div>
                             </div>
@@ -230,62 +231,27 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
-                                        <td><a href="#" class="text-primary">Sambar Powder</a></td>
-                                        <td>$64</td>
-                                        <td><span class="badge bg-warning text-dark">Cash</span></td>
-                                        <td><span class="badge bg-success text-white"><i
-                                                    class="bi bi-emoji-neutral-fill me-1"></i>Ok</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td><a href="#" class="text-primary">Puliyogare Paste</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-info text-white">Google Pay</span></td>
-                                        <td><span class="badge bg-success text-white"><i
-                                                    class="bi bi-emoji-neutral-fill me-1"></i>Ok</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td><a href="#" class="text-primary">Masala Dosa Batter</a></td>
-                                        <td>$147</td>
-                                        <td><span class="badge bg-danger text-white">Credit Card</span></td>
-                                        <td><span class="badge bg-success text-white"><i
-                                                    class="bi bi-emoji-neutral-fill me-1"></i>Ok</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td><a href="#" class="text-primary">Rasam Powder</a></td>
-                                        <td>$67</td>
-                                        <td><span class="badge bg-success text-white">Debit Card</span></td>
-                                        <td><span class="badge bg-success text-white"><i
-                                                    class="bi bi-emoji-smile-fill me-1"></i>Happy</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td><a href="#" class="text-primary">Mysore Silk Saree</a></td>
-                                        <td>$165</td>
-                                        <td><span class="badge bg-primary text-white">PhonePe</span></td>
-                                        <td><span class="badge bg-success text-white"><i
-                                                    class="bi bi-emoji-smile-fill me-1"></i>Happy</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2458</a></th>
-                                        <td><a href="#" class="text-primary">Madras Coffee Powder</a></td>
-                                        <td>$50</td>
-                                        <td><span class="badge bg-warning text-dark">Cash</span></td>
-                                        <td><span class="badge bg-danger text-white"><i
-                                                    class="bi bi-emoji-heart-eyes-fill me-1"></i>Sad</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2148</a></th>
-                                        <td><a href="#" class="text-primary">Paniyaram Pan</a></td>
-                                        <td>$20</td>
-                                        <td><span class="badge bg-info text-white">Paytm</span></td>
-                                        <td><span class="badge bg-danger text-white"><i
-                                                    class="bi bi-emoji-heart-eyes-fill me-1"></i>Sad</span></td>
-                                    </tr>
+                                    @foreach($expenses as $expense)
+                                        <tr>
+                                            <th scope="row"><a href="#">#{{ $expense->id }}</a></th>
+                                            <td><a href="#" class="text-primary">{{ $expense->product->name }}</a></td>
+                                            <td>$64</td>
+                                            <td><span class="badge bg-warning text-dark">{{ $expense->mode }}</span>
+                                            </td>
+                                            <td>
+                                                @if($expense->sentiment == 'Positive')
+                                                    <span class="badge bg-success text-white"><i
+                                                            class="bi bi-emoji-smile-fill me-1"></i>{{ $expense->sentiment }}</span>
+                                                @elseif($expense->sentiment == 'Negative')
+                                                    <span class="badge bg-danger text-white"><i
+                                                            class="bi bi-emoji-angry-fill me-1"></i>{{ $expense->sentiment }}</span>
+                                                @else
+                                                    <span class="badge bg-primary text-white"><i
+                                                            class="bi bi-emoji-neutral-fill me-1"></i>{{ $expense->sentiment ?? 'Neutral'}}</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
 
@@ -373,7 +339,6 @@
                 <div class="modal-body">
                     <form id="expense-form" class="row g-3" action="{{ route('expense.store') }}" method="POST">
                         @csrf
-
                         <div class="col-12 position-relative">
                             <label for="product" class="form-label">
                                 Name
@@ -416,16 +381,6 @@
                             </div>
                         </div>
 
-                        <div class="col-12 position-relative">
-                            <label for="type" class="form-label">Type</label>
-                            <input required type="text" class="form-control @error('type') is-invalid @enderror"
-                                   name="type" id="type"
-                                   value="{{ old('type') }}">
-
-                            <div class="invalid-tooltip">
-                                @error('type') {{ $message }} @enderror
-                            </div>
-                        </div>
 
                         <div class="col-12 position-relative">
                             <label for="feedback" class="form-label">Feedback</label>
@@ -440,7 +395,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
                         </div>
                     </form>
                 </div>
@@ -563,10 +518,7 @@
                 });
             });
 
-            console.log('Sdasd')
-
             $("#speak-expense").on('click', function () {
-                console.log(recognition)
 
                 var speechBtn = $(this)
 
@@ -595,7 +547,6 @@
                     extractData(transcript)
                 };
 
-
                 recognition.start();
 
             })
@@ -606,8 +557,18 @@
                     url: '{{ route('nlp.extract') }}',
                     method: 'POST',
                     data: {text},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function (res) {
                         console.log(res)
+
+                        $("#product").val(res.product)
+                        $("#price").val(res.price)
+                        $("#mode").val(res.mode)
+                        $("#feedback").val(text)
+                        $("#feedback").attr('type', 'hidden').parent().hide()
+                        $("#add-expense").modal('show')
                     },
                     error: function (res) {
                         console.log(res)

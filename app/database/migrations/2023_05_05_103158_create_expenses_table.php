@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('mode')->nullable();
             $table->string('type')->nullable();
             $table->string('feedback')->nullable();
+            $table->string('sentiment')->nullable();
         });
     }
 

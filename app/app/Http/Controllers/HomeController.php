@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\TicketingSystem;
+use App\Models\Expense;
 use App\Models\Product;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Laravel\Pennant\Feature;
 
 class HomeController extends Controller
 {
@@ -28,6 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('home',['products' => $products]);
+        $expenses = Expense::with('product')->where('user_id' , auth()->id())->latest()->limit(5)->get();
+        $totalExpenses = Expense::with('product')->where('user_id' , auth()->id())
+            ->whereBetween('created_at' , [now()->startOfMonth() , now()->endOfMonth()])->sum('price');
+
+        return view('home' , ['products' => $products , 'expenses' => $expenses, 'totalExpenses' => $totalExpenses]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ExpenseController extends Controller
 {
@@ -32,17 +33,26 @@ class ExpenseController extends Controller
             'product' => 'required',
             'price' => 'required',
             'mode' => 'required',
-            'type' => 'required',
             'feedback' => 'required'
         ]);
+
+        $sentiment = '';
+
+        try {
+            $response = Http::post(config('app.api_host').'/expenses' , ['feedback' => $request->feedback]);
+            $sentiment = $response->json()['TextBlob_Analysis'];
+        }catch (\Exception $exception)
+        {
+
+        }
 
         Expense::create([
             'product_id' => $request->input('product'),
             'user_id' => auth()->id(),
             'price' => $request->input('price'),
             'mode' => $request->input('mode'),
-            'type' => $request->input('type'),
-            'feedback' => $request->input('feedback')
+            'feedback' => $request->input('feedback'),
+            'sentiment' => $sentiment
         ]);
 
         return redirect('/home')->with('success','Expense Created Successfully');
