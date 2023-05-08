@@ -10,8 +10,13 @@
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
         </nav>
-    </div><!-- End Page Title -->
-
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success !</strong> {{session()->get('success')}}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+    </div><!-- End Page Title -->     sulaiman
     <section class="section dashboard">
         <div class="row">
 
@@ -38,8 +43,7 @@
                                 <h5 class="card-title">Budget <span>| This Month</span></h5>
 
                                 <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
@@ -545,6 +549,7 @@
         </div>
     </div>
 
+    @push('scripts')
         <script>
             $(document).ready(function () {
                 $('.products-select2').select2({
@@ -610,5 +615,6 @@
                 });
             }
         </script>
+    @endpush
 
 @endsection

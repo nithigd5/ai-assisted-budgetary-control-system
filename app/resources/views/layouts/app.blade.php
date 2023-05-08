@@ -37,6 +37,8 @@
 
     <!-- Template Main CSS File -->
     <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 </head>
 
@@ -83,8 +85,11 @@
 
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-@yield('scripts')
+
+@stack('scripts')
 
 </body>
 
