@@ -11,3 +11,4 @@ bcrypt
 requests
 spacy
 textblob
+pandas

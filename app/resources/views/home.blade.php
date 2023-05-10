@@ -19,7 +19,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-    </div><!-- End Page Title -->     sulaiman
+    </div><!-- End Page Title -->
     <section class="section dashboard">
         <div class="row">
 
@@ -350,6 +350,7 @@
 
                 </div>
             </div><!-- End Reports -->
+
 
             <!-- Recent Purchase -->
             <div class="col-12">
@@ -750,11 +751,10 @@
 
                 $('form').submit(function (e) {
                     // e.preventDefault();
-                    console.log("Hello");
                 });
             });
 
-            $("#speak-expense").on('click', function () {
+                $("#speak-expense").on('click', function () {
 
                 var speechBtn = $(this)
 

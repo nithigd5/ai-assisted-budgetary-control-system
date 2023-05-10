@@ -9,12 +9,8 @@ class NLPController extends Controller
 {
     public function extract(Request $request)
     {
-//        return [
-//            'product' => 'Name of Product' ,
-//            'price' => 233 ,
-//            'mode' => 'Online'
-//        ];
-        $response = Http::post(config('app.api_host').'/expenses' , ['text' => $request->text]);
+
+        $response = Http::timeout(3)->post(config('app.api_host').'/purchases/from-text' , ['text' => $request->text]);
 
         return $response->json();
     }

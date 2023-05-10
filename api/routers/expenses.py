@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Body
+from pydantic import BaseModel
 
 from database.db import session
 from database.orms.ExpenseORM import ExpenseORM, all_expenses
@@ -34,8 +35,13 @@ async def get_all():
     return all_expenses()
 
 
+class Feedback(BaseModel):
+    text: str
+
+
 @router.post('/analyze-sentiment')
-def sentiment_analysis(feedback: Annotated[dict]):
+def sentiment_analysis(feedback_text: Feedback):
+    feedback_text = feedback_text.text
     def getSubjectivity(text):
         return TextBlob(text).sentiment.subjectivity
 
@@ -43,9 +49,10 @@ def sentiment_analysis(feedback: Annotated[dict]):
     def getPolarity(text):
         return TextBlob(text).sentiment.polarity
 
+    feedback = dict()
     # Create two new columns ‘Subjectivity’ & ‘Polarity’
-    feedback['TextBlob_Subjectivity'] = getSubjectivity(feedback['feedback'])
-    feedback['TextBlob_Polarity'] = getPolarity(feedback['feedback'])
+    feedback['TextBlob_Subjectivity'] = getSubjectivity(feedback_text)
+    feedback['TextBlob_Polarity'] = getPolarity(feedback_text)
 
     def getAnalysis(score):
         if score < 0:

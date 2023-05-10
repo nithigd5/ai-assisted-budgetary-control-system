@@ -11,7 +11,7 @@ class Expense extends Model
     use HasFactory;
 
     protected  $fillable = [
-        'product_id','user_id','price','mode','type', 'feedback'
+        'product_id','user_id','price','mode','type', 'feedback', 'sentiment'
     ];
 
     public function product(): BelongsTo

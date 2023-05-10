@@ -31,43 +31,45 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'product' => 'required',
-            'price' => 'required',
-            'mode' => 'required',
+            'product' => 'required' ,
+            'price' => 'required' ,
+            'mode' => 'required' ,
             'feedback' => 'required'
         ]);
 
         $sentiment = '';
 
         try {
-            $response = Http::timeout(5)->post(config('app.api_host').'/expenses' , ['feedback' => $request->feedback]);
+            $response = Http::timeout(3)->post(
+                config('app.api_host') . '/purchases/analyze-sentiment' ,
+                ['text' => $request->feedback]
+            );
             $sentiment = $response->json()['TextBlob_Analysis'];
-        }catch (\Exception $exception)
-        {
+
+        } catch (\Exception $exception) {
 
         }
 
         Expense::create([
-            'product_id' => $request->input('product'),
-            'user_id' => auth()->id(),
-            'price' => $request->input('price'),
-            'mode' => $request->input('mode'),
-            'feedback' => $request->input('feedback'),
+            'product_id' => $request->input('product') ,
+            'user_id' => auth()->id() ,
+            'price' => $request->input('price') ,
+            'mode' => $request->input('mode') ,
+            'feedback' => $request->input('feedback') ,
             'sentiment' => $sentiment
         ]);
 
-        $expensesBudget = ExpensesBudget::query()->where('user_id', auth()->id())
-            ->whereRaw('CAST(created_at as date) = ?', now()->toDateString())->first();
+        $expensesBudget = ExpensesBudget::query()->where('user_id' , auth()->id())
+            ->whereRaw('CAST(created_at as date) = ?' , now()->toDateString())->first();
 
 
-        if($expensesBudget)
-        {
+        if ($expensesBudget) {
             $expensesBudget->expense = $expensesBudget->expense ?? 0;
             $expensesBudget->expense = $expensesBudget->expense + $request->input('price');
             $expensesBudget->save();
         }
 
-        return redirect('/home')->with('success','Expense Created Successfully');
+        return redirect('/home')->with('success' , 'Expense Created Successfully');
     }
 
     /**
@@ -89,7 +91,7 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expense $expense)
+    public function update(Request $request , Expense $expense)
     {
         //
     }
