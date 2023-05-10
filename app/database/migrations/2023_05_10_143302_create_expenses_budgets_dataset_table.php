@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('expense');
             $table->integer('predicted_expense')->nullable();
             $table->integer('actual_budget');
-            $table->integer('estimated_budget')->nullable();
+                $table->integer('estimated_budget')->nullable();
             $table->integer('age');
             $table->boolean('is_employed');
         });

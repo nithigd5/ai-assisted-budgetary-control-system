@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\Budget;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -45,33 +46,40 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'date_of_birth' => ['required', 'date'],
+        return Validator::make($data , [
+            'name' => ['required' , 'string' , 'max:255'] ,
+            'email' => ['required' , 'string' , 'email' , 'max:255' , 'unique:users'] ,
+            'password' => ['required' , 'string' , 'min:8' , 'confirmed'] ,
+            'date_of_birth' => ['required' , 'date'] ,
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'date' => $data['date_of_birth'],
-            'is_employed' => (bool)Arr::get($data, 'is_employed', false)
+        $user = User::create([
+            'name' => $data['name'] ,
+            'email' => $data['email'] ,
+            'password' => Hash::make($data['password']) ,
+            'date' => $data['date_of_birth'] ,
+            'is_employed' => (bool)Arr::get($data , 'is_employed' , false)
         ]);
+
+//        $budget = Budget::query()->create([
+//            'user_id' => $user->id,
+//
+//        ]);
+
+        return $user;
     }
 }

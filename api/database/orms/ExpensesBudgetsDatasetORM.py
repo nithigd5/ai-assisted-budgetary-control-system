@@ -20,7 +20,7 @@ def dataset():
 
 
 class ExpensesBudgetsDataset(Base):
-    __tablename__ = "expenses"
+    __tablename__ = "expenses_budgets_dataset"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column("user_id", ForeignKey("users.id"), nullable=False)

@@ -7,5 +7,8 @@ from database.orms.ExpensesBudgetsDatasetORM import dataset
 
 dataset = dataset()
 
-x = dataset[['TV', 'Radio', 'Newspaper']]
-y = dataset['Sales']
+print(dataset)
+
+#
+# x = dataset['day', 'day_name', 'expense', 'actual_budget', 'age', 'is_employed']
+# y = dataset['predicted_expense', 'estimated_budget']

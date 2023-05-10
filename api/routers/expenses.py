@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from database.db import session
 from database.orms.ExpenseORM import ExpenseORM, all_expenses
+from ml_models.train_expenses import dataset
 from models.Expense import Expense
 from request_validators.ExpenseFromText import ExpenseFromText
 from request_validators.ExpenseRequest import ExpenseRequest
@@ -42,6 +43,7 @@ class Feedback(BaseModel):
 @router.post('/analyze-sentiment')
 def sentiment_analysis(feedback_text: Feedback):
     feedback_text = feedback_text.text
+
     def getSubjectivity(text):
         return TextBlob(text).sentiment.subjectivity
 
@@ -64,3 +66,8 @@ def sentiment_analysis(feedback_text: Feedback):
 
     feedback['TextBlob_Analysis'] = getAnalysis(feedback['TextBlob_Polarity'])
     return feedback
+
+
+@router.get('/train_expenses')
+def train_expenses():
+    return dataset

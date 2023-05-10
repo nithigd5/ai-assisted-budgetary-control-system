@@ -12,3 +12,6 @@ requests
 spacy
 textblob
 pandas
+matplotlib
+seaborn
+numpy
