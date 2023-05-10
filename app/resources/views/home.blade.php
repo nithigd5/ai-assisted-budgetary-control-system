@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-$budget = $budget ?? null;
+    $budget = $budget ?? null;
 @endphp
 
 @section('content')
@@ -24,10 +24,10 @@ $budget = $budget ?? null;
         <div class="row">
 
             <!-- Left side columns -->
-            <div class="col-lg-12">
+            <div class="col-8">
                 <div class="row">
                     <!-- Budget Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-lg-6">
                         <div class="card info-card sales-card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -62,8 +62,7 @@ $budget = $budget ?? null;
                         </div>
                     </div><!-- End Budget Card -->
 
-                    <!-- Spent Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-lg-6">
                         <div class="card info-card revenue-card">
 
                             <div class="filter">
@@ -97,8 +96,30 @@ $budget = $budget ?? null;
                         </div>
                     </div><!-- End Spent Card -->
 
-                    <!-- Add Expense Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-lg-6">
+                        <div class="card info-card revenue-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Update/Add Budget <span>of this Month</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cash-stack"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <button data-bs-toggle="modal" data-bs-target="#set-budget" type="button"
+                                                class="btn btn-primary">Update/Add Budget
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Friends Card -->
+
+                    <div class="col-lg-6">
                         <div class="card info-card revenue-card">
 
                             <div class="card-body">
@@ -123,235 +144,324 @@ $budget = $budget ?? null;
                         </div>
                     </div><!-- End Friends Card -->
 
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card revenue-card">
+                    <!-- Spent Card -->
 
-                            <div class="card-body">
-                                <h5 class="card-title">Update/Add Budget <span>of this Month</span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cash-stack"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <button data-bs-toggle="modal" data-bs-target="#set-budget" type="button"
-                                                class="btn btn-primary">Update/Add Budget
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Friends Card -->
-
-
-                    <!-- Reports -->
-                    <div class="col-12">
-                        <div class="card">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                                <!-- Line Chart -->
-                                <div id="reportsChart"></div>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#reportsChart"), {
-                                            series: [{
-                                                name: 'Budget',
-                                                data: [31, 40, 28, 51, 42, 82, 56],
-                                            }, {
-                                                name: 'Expense',
-                                                data: [11, 32, 45, 32, 34, 52, 41]
-                                            },],
-                                            chart: {
-                                                height: 350,
-                                                type: 'area',
-                                                toolbar: {
-                                                    show: false
-                                                },
-                                            },
-                                            markers: {
-                                                size: 4
-                                            },
-                                            colors: ['#4154f1', '#2eca6a'],
-                                            fill: {
-                                                type: "gradient",
-                                                gradient: {
-                                                    shadeIntensity: 1,
-                                                    opacityFrom: 0.3,
-                                                    opacityTo: 0.4,
-                                                    stops: [0, 90, 100]
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: false
-                                            },
-                                            stroke: {
-                                                curve: 'smooth',
-                                                width: 2
-                                            },
-                                            xaxis: {
-                                                type: 'datetime',
-                                                categories: ["2023-03-19T00:00:00.000Z", "2023-03-20T01:30:00.000Z", "2023-03-21T02:30:00.000Z", "2023-03-22T03:30:00.000Z", "2023-03-23T04:30:00.000Z", "2023-03-24T05:30:00.000Z", "2023-03-25T06:30:00.000Z"]
-                                            },
-                                            tooltip: {
-                                                x: {
-                                                    format: 'dd/MM/yy HH:mm'
-                                                },
-                                            }
-                                        }).render();
-                                    });
-                                </script>
-                                <!-- End Line Chart -->
-
-                            </div>
-
-                        </div>
-                    </div><!-- End Reports -->
-
-                    <!-- Recent Purchase -->
-                    <div class="col-12">
-                        <div class="card recent-sales overflow-auto">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Recent Purchase <span>| This Month</span></h5>
-
-                                <table class="table table-borderless datatable">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Mode of Payment</th>
-                                        <th scope="col">Mood</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($expenses as $expense)
-                                        <tr>
-                                            <th scope="row"><a href="#">#{{ $expense->id }}</a></th>
-                                            <td><a href="#" class="text-primary">{{ $expense->product->name }}</a></td>
-                                            <td>$64</td>
-                                            <td><span class="badge bg-warning text-dark">{{ $expense->mode }}</span>
-                                            </td>
-                                            <td>
-                                                @if($expense->sentiment == 'Positive')
-                                                    <span class="badge bg-success text-white"><i
-                                                            class="bi bi-emoji-smile-fill me-1"></i>{{ $expense->sentiment }}</span>
-                                                @elseif($expense->sentiment == 'Negative')
-                                                    <span class="badge bg-danger text-white"><i
-                                                            class="bi bi-emoji-angry-fill me-1"></i>{{ $expense->sentiment }}</span>
-                                                @else
-                                                    <span class="badge bg-primary text-white"><i
-                                                            class="bi bi-emoji-neutral-fill me-1"></i>{{ $expense->sentiment ?? 'Neutral'}}</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                        </div>
-                    </div><!-- End Recent Purchase -->
-
-                    <!-- Top Alternatives -->
-                    <div class="col-12">
-                        <div class="card top-selling overflow-auto">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body pb-0">
-                                <h5 class="card-title">Top Alternatives<span>| Today</span></h5>
-
-                                <table class="table table-borderless">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Preview</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Shoe</a></td>
-                                        <td>$5</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Watch</a></td>
-                                        <td>$4</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Shampoo</a></td>
-                                        <td>$6</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Coolers</a></td>
-                                        <td>$3</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold">Headphone</a></td>
-                                        <td>$100</td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                        </div>
-                    </div><!-- End Top Selling -->
+                    <!-- Add Expense Card -->
 
                 </div>
             </div><!-- End Left side columns -->
 
+            <div class="col-4">
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#">March</a></li>
+                            <li><a class="dropdown-item" href="#">April</a></li>
+                            <li><a class="dropdown-item" href="#">May</a></li>
+                            <li><a class="dropdown-item" href="#">June</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Budget <span>| Month</span></h5>
+
+                        <div id="trafficChart"
+                             style="min-height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"
+                             class="echart" _echarts_instance_="ec_1683732659126">
+                            <div
+                                style="position: relative; width: 723px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+                                <canvas data-zr-dom-id="zr_0" width="903" height="500"
+                                        style="position: absolute; left: 0px; top: 0px; width: 723px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+                            </div>
+                            <div class=""
+                                 style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(488px, 131px, 0px); border-color: rgb(84, 112, 198); pointer-events: none; visibility: hidden; opacity: 0;">
+                                <div style="margin: 0px 0 0;line-height:1;">
+                                    <div style="font-size:14px;color:#666;font-weight:400;line-height:1;">Access From
+                                    </div>
+                                    <div style="margin: 10px 0 0;line-height:1;">
+                                        <div style="margin: 0px 0 0;line-height:1;"><span
+                                                style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#5470c6;"></span><span
+                                                style="font-size:14px;color:#666;font-weight:400;margin-left:2px">Search Engine</span><span
+                                                style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">1,048</span>
+                                            <div style="clear:both"></div>
+                                        </div>
+                                        <div style="clear:both"></div>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                echarts.init(document.querySelector("#trafficChart")).setOption({
+                                    tooltip: {
+                                        trigger: 'item'
+                                    },
+                                    legend: {
+                                        top: '5%',
+                                        left: 'center'
+                                    },
+                                    series: [{
+                                        name: 'Budget',
+                                        type: 'pie',
+                                        radius: ['40%', '70%'],
+                                        avoidLabelOverlap: false,
+                                        label: {
+                                            show: false,
+                                            position: 'center'
+                                        },
+                                        emphasis: {
+                                            label: {
+                                                show: true,
+                                                fontSize: '18',
+                                                fontWeight: 'bold'
+                                            }
+                                        },
+                                        labelLine: {
+                                            show: false
+                                        },
+                                        data: [
+                                            {
+                                                value: {{ $budget?->food ?? 0 }},
+                                                name: 'Food'
+                                            },
+                                            {
+                                                value: {{ $budget?->clothing ?? 0 }},
+                                                name: 'Clothing'
+                                            },
+                                            {
+                                                value: {{ $budget?->education ?? 0 }},
+                                                name: 'Education'
+                                            },
+                                            {
+                                                value: {{ $budget?->debts ?? 0 }},
+                                                name: 'Debts'
+                                            },
+                                            {
+                                                value: {{ $budget?->mobile ?? 0 }},
+                                                name: 'Mobile'
+                                            },
+                                            {
+                                                value: {{ $budget?->other ?? 0 }},
+                                                name: 'Other'
+                                            }
+                                        ]
+                                    }]
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Reports -->
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Estimated Budget Reports <span>/This Month</span></h5>
+
+                        <!-- Line Chart -->
+                        <div id="reportsChart"></div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new ApexCharts(document.querySelector("#reportsChart"), {
+                                    series: [{
+                                        name: 'Budget',
+                                        data: {!! json_encode($expenseBudgetDataSet->pluck('actual_budget')->map(fn($v) => $v+50)->toArray()) !!},
+                                    }, {
+                                        name: 'Expense',
+                                        data: {!! json_encode($expenseBudgetDataSet->pluck('expense')->toArray()) !!},
+                                    },],
+                                    chart: {
+                                        height: 350,
+                                        type: 'area',
+                                        toolbar: {
+                                            show: false
+                                        },
+                                    },
+                                    markers: {
+                                        size: 4
+                                    },
+                                    colors: ['#4154f1', '#2eca6a'],
+                                    fill: {
+                                        type: "gradient",
+                                        gradient: {
+                                            shadeIntensity: 1,
+                                            opacityFrom: 0.3,
+                                            opacityTo: 0.4,
+                                            stops: [0, 90, 100]
+                                        }
+                                    },
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    stroke: {
+                                        curve: 'smooth',
+                                        width: 2
+                                    },
+                                    xaxis: {
+                                        type: 'datetime',
+                                        categories: {!!   json_encode($expenseBudgetDataSet->pluck('created_at')->map(fn($date) => $date->toFormattedDateString())->toArray()) !!}
+                                    },
+                                    tooltip: {
+                                        x: {
+                                            format: 'dd/MM/yy'
+                                        },
+                                    }
+                                }).render();
+                            });
+                        </script>
+                        <!-- End Line Chart -->
+
+                    </div>
+
+                </div>
+            </div><!-- End Reports -->
+
+            <!-- Recent Purchase -->
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Purchase <span>| This Month</span></h5>
+
+                        <table class="table table-borderless datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Mode of Payment</th>
+                                <th scope="col">Mood</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($expenses as $expense)
+                                <tr>
+                                    <th scope="row"><a href="#">#{{ $expense->id }}</a></th>
+                                    <td><a href="#" class="text-primary">{{ $expense->product->name }}</a></td>
+                                    <td>₹{{ $expense->price }}</td>
+                                    <td><span class="badge bg-warning text-dark">{{ $expense->mode }}</span>
+                                    </td>
+                                    <td>
+                                        @if($expense->sentiment == 'Positive')
+                                            <span class="badge bg-success text-white"><i
+                                                    class="bi bi-emoji-smile-fill me-1"></i>{{ $expense->sentiment }}</span>
+                                        @elseif($expense->sentiment == 'Negative')
+                                            <span class="badge bg-danger text-white"><i
+                                                    class="bi bi-emoji-angry-fill me-1"></i>{{ $expense->sentiment }}</span>
+                                        @else
+                                            <span class="badge bg-primary text-white"><i
+                                                    class="bi bi-emoji-neutral-fill me-1"></i>{{ $expense->sentiment ?? 'Neutral'}}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div><!-- End Recent Purchase -->
+
+            <!-- Top Alternatives -->
+            <div class="col-12">
+                <div class="card top-selling overflow-auto">
+
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Top Alternatives<span>| Today</span></h5>
+
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th scope="col">Preview</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
+                                <td><a href="#" class="text-primary fw-bold">Shoe</a></td>
+                                <td>$5</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
+                                <td><a href="#" class="text-primary fw-bold">Watch</a></td>
+                                <td>$4</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
+                                <td><a href="#" class="text-primary fw-bold">Shampoo</a></td>
+                                <td>$6</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
+                                <td><a href="#" class="text-primary fw-bold">Coolers</a></td>
+                                <td>$3</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
+                                <td><a href="#" class="text-primary fw-bold">Headphone</a></td>
+                                <td>$100</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div><!-- End Top Selling -->
         </div>
     </section>
 
@@ -678,9 +788,9 @@ $budget = $budget ?? null;
                     success: function (res) {
                         console.log(res)
 
-                        if(res.product)
+                        if (res.product)
 
-                        $("#product").val(res.product)
+                            $("#product").val(res.product)
                         $("#price").val(res.price)
                         $("#mode").val(res.mode)
                         $("#feedback").val(text)

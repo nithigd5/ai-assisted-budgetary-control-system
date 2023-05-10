@@ -35,6 +35,27 @@
                             </div>
                             @enderror
 
+                            <div class="form-group">
+                                <input type="date" name="date_of_birth" class="form-control form-control-user @error('date_of_birth') is-invalid @enderror" id="date_of_birth"
+                                       placeholder="{{ __('Date Of Birth') }}">
+                            </div>
+                            @error('date_of_birth')
+                            <div class="form-group custom-control">
+                                <label class="">{{ $message }}</label>
+                            </div>
+                            @enderror
+
+                            <div class="form-group">
+                                <label for="is_employed">Are you Employed ?</label>
+                                <input type="checkbox" name="is_employed" class="form-control form-control-user @error('is_employed') is-invalid @enderror" id="date_of_birth"
+                                       placeholder="{{ __('is_employed') }}">
+                            </div>
+                            @error('date_of_birth')
+                            <div class="form-group custom-control">
+                                <label class="">{{ $message }}</label>
+                            </div>
+                            @enderror
+
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror"

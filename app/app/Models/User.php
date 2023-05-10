@@ -22,6 +22,8 @@ class User extends Authenticatable implements CanUseTickets
     protected $fillable = [
         'name',
         'email',
+        'date_of_birth',
+        'is_employed',
         'password',
     ];
 
@@ -42,5 +44,6 @@ class User extends Authenticatable implements CanUseTickets
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'date_of_birth' => 'datetime'
     ];
 }
