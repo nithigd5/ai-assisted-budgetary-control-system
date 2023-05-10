@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('day_name');
             $table->integer('user_id');
             $table->integer('expense');
+            $table->integer('predicted_expense')->nullable();
             $table->integer('actual_budget');
             $table->integer('estimated_budget')->nullable();
             $table->integer('age');

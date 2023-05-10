@@ -287,13 +287,24 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 new ApexCharts(document.querySelector("#reportsChart"), {
-                                    series: [{
+                                    series: [
+                                        {
                                         name: 'Budget',
-                                        data: {!! json_encode($expenseBudgetDataSet->pluck('actual_budget')->map(fn($v) => $v+50)->toArray()) !!},
-                                    }, {
+                                        data: {!! json_encode($expenseBudgetDataSet->pluck('actual_budget')->toArray()) !!},
+                                    },
+                                        {
+                                        name: 'Predicted Budget',
+                                        data: {!! json_encode($expenseBudgetDataSet->pluck('predicted_budget')->toArray()) !!},
+                                    },
+                                        {
+                                        name: 'Predicted Expense',
+                                        data: {!! json_encode($expenseBudgetDataSet->pluck('predicted_expense')->toArray()) !!},
+                                    },
+                                        {
                                         name: 'Expense',
                                         data: {!! json_encode($expenseBudgetDataSet->pluck('expense')->toArray()) !!},
-                                    },],
+                                    },
+                                    ],
                                     chart: {
                                         height: 350,
                                         type: 'area',
