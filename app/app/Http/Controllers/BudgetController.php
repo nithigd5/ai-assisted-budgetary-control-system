@@ -25,7 +25,7 @@ class BudgetController extends Controller
 
         $month = CarbonPeriod::create(now()->startOfMonth() , now());
 
-        $dailyBasisBudget = $budget->food + $budget->mobile + $budget->other + $budget->education + $budget->debts + $budget->mobile;
+        $dailyBasisBudget = $budget->total();
 
         $days = now()->startOfMonth()->diffInDays(now()->endOfMonth());
 
@@ -40,7 +40,9 @@ class BudgetController extends Controller
 
         foreach ($month as $date) {
 
-            ExpensesBudget::query()->create([
+            $expense = ExpensesBudget::query()->whereRaw('CAST(created_at as date) = ?' , $date->toDateString())->first();
+
+            $data = [
                 'user_id' => auth()->id() ,
                 'created_at' => $date ,
                 'day' => $date->day ,
@@ -50,7 +52,14 @@ class BudgetController extends Controller
                 'estimated_budget' => null ,
                 'age' => now()->diffInYears(auth()->user()->date_of_birth) ,
                 'is_employed' => auth()->user()->is_employed ?? false ,
-            ]);
+            ];
+
+            if (!$expense) {
+                ExpensesBudget::query()->create($data);
+            } else {
+                $expense->update($data);
+            }
+
         }
 
         return back();

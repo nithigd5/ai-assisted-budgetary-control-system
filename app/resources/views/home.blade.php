@@ -51,7 +51,7 @@
                                         <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>$2,264</h6>
+                                        <h6>₹@currency($budget?->total())</h6>
                                         {{--                                        <span class="text-success small pt-1 fw-bold">12%</span> <span--}}
                                         {{--                                            class="text-muted small pt-2 ps-1">increase</span>--}}
 
@@ -87,9 +87,9 @@
                                         <i class="bi bi-currency-dollar"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>${{ $totalExpenses }}</h6>
-                                        <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                            class="text-muted small pt-2 ps-1">Decrease</span>
+                                        <h6>₹@currency($totalExpenses)</h6>
+{{--                                        <span class="text-success small pt-1 fw-bold">8%</span> <span--}}
+{{--                                            class="text-muted small pt-2 ps-1">Decrease</span>--}}
                                     </div>
                                 </div>
                             </div>
@@ -315,7 +315,7 @@
                                     markers: {
                                         size: 4
                                     },
-                                    colors: ['#4154f1', '#2eca6a'],
+                                    colors: ['#4154f1', '#2eca6a', '#f71000', '#ffea00'],
                                     fill: {
                                         type: "gradient",
                                         gradient: {

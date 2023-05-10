@@ -10,4 +10,9 @@ class Budget extends Model
     use HasFactory;
 
     protected $fillable = ['food', 'education', 'debts', 'clothing', 'mobile', 'other', 'user_id'];
+
+    public function total()
+    {
+        return $this->food + $this->mobile + $this->other + $this->education + $this->debts + $this->mobile;
+    }
 }

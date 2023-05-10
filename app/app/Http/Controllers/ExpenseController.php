@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\ExpensesBudget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -39,7 +40,7 @@ class ExpenseController extends Controller
         $sentiment = '';
 
         try {
-            $response = Http::post(config('app.api_host').'/expenses' , ['feedback' => $request->feedback]);
+            $response = Http::timeout(5)->post(config('app.api_host').'/expenses' , ['feedback' => $request->feedback]);
             $sentiment = $response->json()['TextBlob_Analysis'];
         }catch (\Exception $exception)
         {
@@ -54,6 +55,17 @@ class ExpenseController extends Controller
             'feedback' => $request->input('feedback'),
             'sentiment' => $sentiment
         ]);
+
+        $expensesBudget = ExpensesBudget::query()->where('user_id', auth()->id())
+            ->whereRaw('CAST(created_at as date) = ?', now()->toDateString())->first();
+
+
+        if($expensesBudget)
+        {
+            $expensesBudget->expense = $expensesBudget->expense ?? 0;
+            $expensesBudget->expense = $expensesBudget->expense + $request->input('price');
+            $expensesBudget->save();
+        }
 
         return redirect('/home')->with('success','Expense Created Successfully');
     }
