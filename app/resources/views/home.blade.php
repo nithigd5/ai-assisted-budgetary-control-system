@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@php
+$budget = $budget ?? null;
+@endphp
 
 @section('content')
     <div class="pagetitle">
@@ -112,6 +115,29 @@
                                         </button>
                                         <button type="button" id="speak-expense" class="btn btn-primary"
                                                 data-listening="false"><i class="bi bi-mic-fill"></i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Friends Card -->
+
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Update/Add Budget <span>of this Month</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cash-stack"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <button data-bs-toggle="modal" data-bs-target="#set-budget" type="button"
+                                                class="btn btn-primary">Update/Add Budget
+                                        </button>
                                     </div>
 
                                 </div>
@@ -405,6 +431,95 @@
         </div>
     </div>
 
+    <div class="modal fade" id="set-budget" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update/Add Current Month Budget</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="budget-form" class="row g-3" action="{{ route('budgets.store') }}" method="POST">
+                        @csrf
+                        <div class="col-12 position-relative">
+                            <label for="food" class="form-label">Food</label>
+                            <input required type="number" class="form-control @error('food') is-invalid @enderror"
+                                   name="food" id="food"
+                                   value="{{ old('food', $budget?->food) }}">
+
+                            <div class="invalid-tooltip">
+                                @error('food') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="education" class="form-label">Education</label>
+                            <input required type="number" class="form-control @error('education') is-invalid @enderror"
+                                   name="education" id="education"
+                                   value="{{ old('education', $budget?->education) }}">
+
+                            <div class="invalid-tooltip">
+                                @error('education') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="debts" class="form-label">Debts</label>
+                            <input required type="number" class="form-control @error('debts') is-invalid @enderror"
+                                   name="debts" id="debts"
+                                   value="{{ old('debts', $budget?->debts) }}">
+
+                            <div class="invalid-tooltip">
+                                @error('debts') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="clothing" class="form-label">Clothing</label>
+                            <input required type="number" class="form-control @error('clothing') is-invalid @enderror"
+                                   name="clothing" id="clothing"
+                                   value="{{ old('clothing', $budget?->clothing) }}">
+
+                            <div class="invalid-tooltip">
+                                @error('clothing') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="mobile" class="form-label">Mobile</label>
+                            <input required type="number" class="form-control @error('mobile') is-invalid @enderror"
+                                   name="mobile" id="mobile"
+                                   value="{{ old('mobile', $budget?->mobile) }}">
+
+                            <div class="invalid-tooltip">
+                                @error('mobile') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-12 position-relative">
+                            <label for="other" class="form-label">Other</label>
+                            <input required type="number" class="form-control @error('other') is-invalid @enderror"
+                                   name="other" id="other"
+                                   value="{{ old('other', $budget?->other) }}">
+
+                            <div class="invalid-tooltip">
+                                @error('other') {{ $message }} @enderror
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
     <!-- Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -562,6 +677,8 @@
                     },
                     success: function (res) {
                         console.log(res)
+
+                        if(res.product)
 
                         $("#product").val(res.product)
                         $("#price").val(res.price)

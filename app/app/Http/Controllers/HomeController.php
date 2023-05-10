@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
 use App\Models\Expense;
 use App\Models\Product;
 
@@ -29,6 +30,8 @@ class HomeController extends Controller
         $totalExpenses = Expense::with('product')->where('user_id' , auth()->id())
             ->whereBetween('created_at' , [now()->startOfMonth() , now()->endOfMonth()])->sum('price');
 
-        return view('home' , ['products' => $products , 'expenses' => $expenses, 'totalExpenses' => $totalExpenses]);
+        $budget = Budget::query()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->first();
+
+        return view('home' , ['products' => $products , 'expenses' => $expenses, 'totalExpenses' => $totalExpenses, 'budget' => $budget]);
     }
 }

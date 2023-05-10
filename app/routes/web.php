@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketingController;
@@ -56,4 +57,5 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/expense', [ExpenseController::class, 'store'])->name('expense.store');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store');
+    Route::post('/budget', [BudgetController::class, 'store'])->name('budgets.store');
 });
