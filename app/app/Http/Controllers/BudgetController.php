@@ -49,7 +49,7 @@ class BudgetController extends Controller
                 'day_name' => $date->getTranslatedDayName() ,
                 'expense' => $monthExpenses->where('created_at' , '=' , $date)->first()?->price ?? 0 ,
                 'actual_budget' => $dailyBasisBudget ,
-                'estimated_budget' => null ,
+                'estimated_budget' => null,
                 'age' => now()->diffInYears(auth()->user()->date_of_birth) ,
                 'is_employed' => auth()->user()->is_employed ?? false ,
             ];

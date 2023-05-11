@@ -21,7 +21,7 @@ class ExpenseFactory extends Factory
         return [
             'user_id' => User::factory(),
             'product_id' => Product::factory(),
-            'price' => $this->faker->numberBetween(100, 1000),
+            'price' => $this->faker->numberBetween(100, 500),
             'mode' => $this->faker->randomElement(['online', 'offline']),
             'feedback' => $this->faker->randomElement(['happy', 'sad', 'worst', 'ok', 'shit', 'not bad', 'worthless', 'wonderful', 'nice', 'good', 'its better', 'unsatisfied', 'satisfied'])
         ];

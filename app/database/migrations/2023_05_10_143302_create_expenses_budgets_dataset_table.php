@@ -17,10 +17,10 @@ return new class extends Migration
             $table->integer('day');
             $table->string('day_name');
             $table->integer('user_id');
-            $table->integer('expense');
-            $table->integer('predicted_expense')->nullable();
-            $table->integer('actual_budget');
-                $table->integer('estimated_budget')->nullable();
+            $table->string('expense');
+            $table->string('predicted_expense')->nullable();
+            $table->string('actual_budget');
+            $table->string('estimated_budget')->nullable();
             $table->integer('age');
             $table->boolean('is_employed');
         });
