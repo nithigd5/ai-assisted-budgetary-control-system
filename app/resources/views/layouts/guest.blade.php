@@ -24,7 +24,7 @@
     @yield('content')
 
 </div>
-@vite('resources/js/app.js')
+{{--@vite('resources/js/app.js')--}}
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('js/jquery.min.js') }}"></script>

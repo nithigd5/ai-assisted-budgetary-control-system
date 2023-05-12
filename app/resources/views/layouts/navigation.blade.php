@@ -1,4 +1,5 @@
-<!-- ======= Header ======= -->
+@php use Illuminate\Support\Facades\Route; @endphp
+        <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -86,14 +87,27 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="{{ route('home') }}">
+            <a class="nav-link {{Route::currentRouteNamed('home') ? 'active-nav-link' : ''}}" href="{{ route('home') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
+        <li class="nav-item">
+            <a class="nav-link {{Route::currentRouteNamed('expense.index') ? 'active-nav-link' : ''}} " href="{{ route('expense.index') }}">
+                <i class="bi bi-cash-coin"></i>
+                <span>Expenses</span>
+            </a>
+        </li>
 
-          <li class="nav-item">
+        <li class="nav-item">
+            <a class="nav-link {{Route::currentRouteNamed('report.index') ? 'active-nav-link' : ''}} " href="{{ route('report.index') }}">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tickets-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-question-circle"></i><span>Tickets</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
