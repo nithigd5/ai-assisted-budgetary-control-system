@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ExpensesDataTable;
 use App\Models\Expense;
 use App\Models\ExpensesBudget;
 use Illuminate\Http\Request;
@@ -12,9 +13,9 @@ class ExpenseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ExpensesDataTable $dataTable)
     {
-        //
+        return $dataTable->render('expense');
     }
 
     /**

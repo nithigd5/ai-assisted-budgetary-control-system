@@ -84,7 +84,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-currency-dollar"></i>
+                                        <i class="bi bi-currency-rupee"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>₹@currency($totalExpenses)</h6>
@@ -105,7 +105,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cash-stack"></i>
+                                        <i class="bi bi-wallet-fill"></i>
                                     </div>
                                     <div class="ps-3">
                                         <button data-bs-toggle="modal" data-bs-target="#set-budget" type="button"
@@ -128,7 +128,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cash-stack"></i>
+                                        <i class="bi bi-wallet2"></i>
                                     </div>
                                     <div class="ps-3">
                                         <button data-bs-toggle="modal" data-bs-target="#add-expense" type="button"

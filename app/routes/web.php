@@ -4,6 +4,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TicketingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -59,4 +60,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/product', [ProductController::class, 'store'])->name('product.store');
     Route::get('/product', [ProductController::class, 'get'])->name('products.get');
     Route::post('/budget', [BudgetController::class, 'store'])->name('budgets.store');
+    Route::get('/expense', [ExpenseController::class, 'index'])->name('expense.index');
+    Route::get('/report', [ReportController::class,'index'])->name('report.index');
 });
