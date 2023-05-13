@@ -185,6 +185,6 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'api_host' => env('API_HOST', 'localhost').':'.env('API_PORT', 8000)
+    'api_host' => env('API_HOST', 'localhost').':'.env('API_PORT', 3001)
 
 ];

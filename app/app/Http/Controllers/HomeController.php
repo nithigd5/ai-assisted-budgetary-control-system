@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->latest()->get();
 
         $expenses = Expense::with('product')->where('user_id' , auth()->id())
-            ->whereBetween('created_at' , [now()->startOfMonth() , now()])
+            ->whereBetween('created_at' , [now()->subMonth() , now()])
             ->latest()->get()->take(5);
 
         $totalExpenses = Expense::with('product')->where('user_id' , auth()->id())
@@ -45,10 +45,34 @@ class HomeController extends Controller
         $budget = Budget::query()->whereBetween('created_at' , [now()->startOfMonth() , now()->endOfMonth()])->first();
 
         $expenseBudgetDataSet = ExpensesBudget::query()->where('user_id' , auth()->id())
-            ->whereBetween('created_at' , [now()->startOfMonth() , now()->endOfMonth()])
+            ->whereBetween('created_at' , [now()->startOfMonth() , now()])
+            ->orderBy('created_at')
             ->get();
 
+        $expenseBudgetDataSet = $expenseBudgetDataSet->map(function ($data){
+            $data->savings = round($data->actual_budget - $data->expense, 2);
+            $data->expense = round($data->expense, 2);
+            $data->predicted_expense = round($data->predicted_expense, 2);
+            $data->predicted_expense = max($data->predicted_expense , 0);
+            $data->actual_budget = round($data->actual_budget, 2);
+            return $data;
+        });
+
+        $forecastedExpenses = ExpensesBudget::query()->where('user_id' , auth()->id())
+            ->whereBetween('created_at' , [now() , now()->addMonth()])
+            ->orderBy('created_at')
+            ->get();
+
+        $forecastedExpenses = $forecastedExpenses->map(function ($data){
+            $data->predicted_expense = max($data->predicted_expense , 0);
+            return $data;
+        });
+
+
+//        dd($forecastedExpenses->toArray());
+
         return view('home' , ['products' => $products , 'expenses' => $expenses ,
-            'totalExpenses' => $totalExpenses , 'budget' => $budget , 'expense' , 'monthExpenses' => $monthExpenses, 'expenseBudgetDataSet' => $expenseBudgetDataSet]);
+            'totalExpenses' => $totalExpenses , 'budget' => $budget , 'expense' , 'monthExpenses' => $monthExpenses,
+            'expenseBudgetDataSet' => $expenseBudgetDataSet, 'forecastedExpenses' => $forecastedExpenses]);
     }
 }

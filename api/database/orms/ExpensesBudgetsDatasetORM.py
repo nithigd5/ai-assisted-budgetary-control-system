@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, TIMESTAMP, FetchedValue, text, Float, Text, JSON, ForeignKey, select, \
-    Boolean
+from sqlalchemy import Column, Integer, String, TIMESTAMP, FetchedValue, text, Float, Text, JSON, ForeignKey, \
+    Boolean, update, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session, selectinload
 from database.db import engine
@@ -10,11 +10,11 @@ from database.orms.ProductORM import ProductORM
 import pandas as pd
 
 
-def dataset():
+def dataset(user_id):
     session = Session(engine)
 
-    expenses = session.query(ExpensesBudgetsDataset)
-    df = pd.read_sql(sql=expenses.statement, con=engine)
+    expenses = select(ExpensesBudgetsDataset).where(ExpensesBudgetsDataset.user_id == user_id)
+    df = pd.read_sql(sql=expenses, con=engine)
 
     return df
 
@@ -30,4 +30,6 @@ class ExpensesBudgetsDataset(Base):
     actual_budget: Integer = Column(Integer)
     estimated_budget: Integer = Column(Integer, nullable=True)
     age: Integer = Column(Integer)
+    day: Integer = Column(Integer)
+    day_name: String = Column(String)
     is_employed: bool = Column(Boolean)

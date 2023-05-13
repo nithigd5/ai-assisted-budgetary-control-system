@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from database.db import session
 from database.orms.ExpenseORM import ExpenseORM, all_expenses
-from ml_models.train_expenses import dataset
+from ml_models.train_expenses import dataset, predict
 from models.Expense import Expense
 from request_validators.ExpenseFromText import ExpenseFromText
 from request_validators.ExpenseRequest import ExpenseRequest
@@ -69,5 +69,5 @@ def sentiment_analysis(feedback_text: Feedback):
 
 
 @router.get('/train_expenses')
-def train_expenses():
-    return dataset
+def train_expenses(user_id):
+    return predict(user_id)

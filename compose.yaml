@@ -42,6 +42,8 @@ services:
       - "DB_HOST=${DB_HOST}"
       - "DB_CONNECTION=pgsql"
       - "DB_PORT=${DB_PORT}"
+      - "API_PORT=8000"
+      - "API_HOST=api"
     ports:
       - "8080:80"
       - "2222:22"
