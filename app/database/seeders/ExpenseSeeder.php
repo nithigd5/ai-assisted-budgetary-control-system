@@ -18,7 +18,7 @@ class ExpenseSeeder extends Seeder
     {
         $users  = User::all();
 
-        $products = Product::all()->toArray();
+        $products = Product::query()->latest()->limit(1000)->get('id')->toArray();
 
         foreach ($users as $user)
         {
