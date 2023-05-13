@@ -19,6 +19,10 @@ class AmazonKaggleProductsImport implements ToModel , WithUpserts, WithHeadingRo
             'max_price' => $row['actual_price'] ,
             'ratings' => $row['ratings'] ,
             'no_of_ratings' => $row['no_of_ratings'] ,
+            'extra' => json_encode([
+                'link' => $row['link'],
+                'image' => $row['image']
+            ])
         ]);
     }
 

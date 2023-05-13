@@ -917,7 +917,7 @@
                             return {
                                 results: data.data,
                                 pagination: {
-                                    more: data.current_page  < data.last_page
+                                    more: data.current_page < data.last_page
                                 }
                             };
                         }
@@ -929,36 +929,43 @@
                 });
             });
 
+            var speechBtn = $('#speak-expense')
+
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+
+            // This runs when the speech recognition service starts
+            recognition.onstart = function () {
+                speechBtn.data('listening', true)
+                speechBtn.html('<i class="bi bi-stop-circle-fill"></i>');
+            };
+
+            recognition.onspeechend = function () {
+                // when user is done speaking
+                speechBtn.html('<i class="bi bi-mic-fill"></i>')
+                speechBtn.data('listening', false)
+                recognition.stop();
+            }
+
+            // This runs when the speech recognition service returns result
+            recognition.onresult = function (event) {
+                let transcript = event.results[0][0].transcript;
+                let confidence = event.results[0][0].confidence;
+
+                extractData(transcript)
+            };
+
             $("#speak-expense").on('click', function () {
 
-                var speechBtn = $(this)
+                if (!speechBtn.data('listening')) {
+                    recognition.start()
 
-                // new speech recognition object
-                var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-                var recognition = new SpeechRecognition();
-
-                // This runs when the speech recognition service starts
-                recognition.onstart = function () {
                     speechBtn.data('listening', true)
-                    speechBtn.html('<i class="bi bi-stop-circle-fill"></i>');
-                };
-
-                recognition.onspeechend = function () {
-                    // when user is done speaking
-                    speechBtn.html('<i class="bi bi-mic-fill"></i>')
+                } else {
                     speechBtn.data('listening', false)
-                    recognition.stop();
+                    recognition.stop()
                 }
-
-                // This runs when the speech recognition service returns result
-                recognition.onresult = function (event) {
-                    let transcript = event.results[0][0].transcript;
-                    let confidence = event.results[0][0].confidence;
-
-                    extractData(transcript)
-                };
-
-                recognition.start();
 
             })
 

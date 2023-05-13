@@ -17,12 +17,6 @@ class ProductController extends Controller
         //
     }
 
-    public function recommended()
-    {
-        $expenses = Expense::query()->where('user_id' , auth()->id())
-            ->whereNull('sentiment')->orWhere('sentiment' , '<>' , 'Positive');
-    }
-
     public function get()
     {
         $search = request('term');
