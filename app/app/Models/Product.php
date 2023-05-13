@@ -26,13 +26,14 @@ class Product extends Model
 
         $product = $expenses->first()->product;
 
-        $products = Product::query()->where('type' , $product->type)
-            ->orderBy('ratings' , 'DESC')
-            ->orderBy('no_of_ratings' , 'DESC')
-            ->whereNotNull('ratings')
-            ->whereNotNull('no_of_ratings')
+        $products = Product::query()
+            ->where('type' , $product->type)
+            ->where('category', $product->category)
+            ->orderByRaw('ratings DESC NULLS LAST')
+            ->orderByRaw('no_of_ratings DESC NULLS LAST')
             ->orWhereRaw('name like \'%?%\'' , $product->names)
-            ->limit(5)->get();
+            ->limit(5)
+            ->get();
 
         return $products;
     }
