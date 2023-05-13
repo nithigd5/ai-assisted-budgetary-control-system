@@ -956,6 +956,9 @@
 
             function extractData(text) {
                 console.log(text)
+
+                $("#add-expense").modal('show')
+
                 $.ajax({
                     url: '{{ route('nlp.extract') }}',
                     method: 'POST',
@@ -966,20 +969,30 @@
                     success: function (res) {
                         console.log(res)
 
-                        if (res.product)
-
-                            $("#product").val(res.product)
+                        select2_search($("#product"), res.product)
                         $("#price").val(res.price)
                         $("#mode").val(res.mode)
                         $("#feedback").val(text)
                         $("#feedback").attr('type', 'hidden').parent().hide()
-                        $("#add-expense").modal('show')
                     },
                     error: function (res) {
                         console.log(res)
                     }
                 });
             }
+
+            function select2_search($el, term) {
+                $el.select2('open');
+
+                // Get the search box within the dropdown or the selection
+                // Dropdown = single, Selection = multiple
+                var $search = $el.data('select2').dropdown.$search || $el.data('select2').selection.$search;
+                // This is undocumented and may change in the future
+
+                $search.val(term);
+                $search.trigger('keyup');
+            }
+
         </script>
     @endpush
 
