@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Expense;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -14,6 +15,26 @@ class ProductController extends Controller
     public function index()
     {
         //
+    }
+
+    public function recommended()
+    {
+        $expenses = Expense::query()->where('user_id' , auth()->id())
+            ->whereNull('sentiment')->orWhere('sentiment' , '<>' , 'Positive');
+    }
+
+    public function get()
+    {
+        $search = request('term');
+
+        $products = Product::query()->where('name' , 'ilike' , '%' . $search . '%')
+            ->orWhere('type' , 'ilike' , '%' . $search . '%')
+            ->orWhere('category' , 'ilike' , '%' . $search . '%')
+            ->orWhere('description' , 'ilike' , '%' . $search . '%')
+            ->orWhere('brand' , 'ilike' , '%' . $search . '%')
+            ->select('id' , 'name as text');
+
+        return $products->paginate();
     }
 
     /**
@@ -30,7 +51,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         Product::create($request->validated());
-        return redirect('/home')->with('success','Product created successfully');
+        return redirect('/home')->with('success' , 'Product created successfully');
     }
 
     /**
@@ -52,7 +73,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request , Product $product)
     {
         //
     }

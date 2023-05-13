@@ -57,5 +57,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/expense', [ExpenseController::class, 'store'])->name('expense.store');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/product', [ProductController::class, 'get'])->name('products.get');
     Route::post('/budget', [BudgetController::class, 'store'])->name('budgets.store');
 });

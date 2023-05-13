@@ -664,10 +664,6 @@
                             </label>
                             <select required class="products-select2 form-select @error('product') is-invalid @enderror"
                                     name="product" id="product">
-                                <option>Select An Option</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                @endforeach
                             </select>
                             <div class="invalid-tooltip">
                                 @error('product') {{ $message }} @enderror
@@ -914,6 +910,18 @@
                 $('.products-select2').select2({
                     dropdownParent: $('#add-expense'),
                     width: '100%',
+                    ajax: {
+                        url: '{{ route('products.get') }}',
+                        dataType: 'json',
+                        processResults: function (data, params) {
+                            return {
+                                results: data.data,
+                                pagination: {
+                                    more: data.current_page  < data.last_page
+                                }
+                            };
+                        }
+                    },
                 });
 
                 $('form').submit(function (e) {

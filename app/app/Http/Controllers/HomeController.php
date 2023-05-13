@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use App\Models\Expense;
 use App\Models\ExpensesBudget;
-use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -27,8 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-
         $monthExpenses = Expense::query()->where('user_id' , auth()->id())
             ->selectRaw('sum(price) as price, CAST(created_at as date) as created_at')
             ->whereBetween('created_at' , [now()->startOfMonth() , now()])
@@ -49,12 +46,12 @@ class HomeController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        $expenseBudgetDataSet = $expenseBudgetDataSet->map(function ($data){
-            $data->savings = round($data->actual_budget - $data->expense, 2);
-            $data->expense = round($data->expense, 2);
-            $data->predicted_expense = round($data->predicted_expense, 2);
+        $expenseBudgetDataSet = $expenseBudgetDataSet->map(function ($data) {
+            $data->savings = round($data->actual_budget - $data->expense , 2);
+            $data->expense = round($data->expense , 2);
+            $data->predicted_expense = round($data->predicted_expense , 2);
             $data->predicted_expense = max($data->predicted_expense , 0);
-            $data->actual_budget = round($data->actual_budget, 2);
+            $data->actual_budget = round($data->actual_budget , 2);
             return $data;
         });
 
@@ -63,7 +60,7 @@ class HomeController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        $forecastedExpenses = $forecastedExpenses->map(function ($data){
+        $forecastedExpenses = $forecastedExpenses->map(function ($data) {
             $data->predicted_expense = max($data->predicted_expense , 0);
             return $data;
         });
@@ -71,8 +68,8 @@ class HomeController extends Controller
 
 //        dd($forecastedExpenses->toArray());
 
-        return view('home' , ['products' => $products , 'expenses' => $expenses ,
-            'totalExpenses' => $totalExpenses , 'budget' => $budget , 'expense' , 'monthExpenses' => $monthExpenses,
-            'expenseBudgetDataSet' => $expenseBudgetDataSet, 'forecastedExpenses' => $forecastedExpenses]);
+        return view('home' , ['expenses' => $expenses ,
+            'totalExpenses' => $totalExpenses , 'budget' => $budget , 'expense' , 'monthExpenses' => $monthExpenses ,
+            'expenseBudgetDataSet' => $expenseBudgetDataSet , 'forecastedExpenses' => $forecastedExpenses]);
     }
 }

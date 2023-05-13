@@ -31,10 +31,7 @@ class DatabaseSeeder extends Seeder
 
 //        Product::factory(10)->create();
 
-        \App\Models\User::factory(10)->create();
 
-        $users  = User::all();
-//
 //        foreach ($users as $user) {
 //            Ticket::query()->insert(array_fill_keys([0, 1, 2], [
 //                'title' => fake()->sentence, 'created_at' => now(), 'updated_at' => now(),
@@ -45,16 +42,7 @@ class DatabaseSeeder extends Seeder
 //        }
 
 
-        foreach ($users as $user)
-        {
-            $month = CarbonPeriod::create(now()->subMonths(3), now());
+//        $this->call(ProductSeeder::class);
 
-            foreach ($month as $date) {
-                Expense::factory(3)->create([
-                    'user_id' => $user->id ,
-                    'created_at' => $date
-                ]);
-            }
-        }
     }
 }

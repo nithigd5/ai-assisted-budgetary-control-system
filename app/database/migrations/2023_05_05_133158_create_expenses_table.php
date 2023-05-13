@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('product_id')->constrained('products');
+            $table->string('product_id');
             $table->foreignId('user_id')->constrained('users');
             $table->float('price');
             $table->string('mode')->nullable();
