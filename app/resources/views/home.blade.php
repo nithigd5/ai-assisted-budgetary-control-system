@@ -614,11 +614,11 @@
                             @foreach($alternatives as $product)
                                 <tr>
                                     <th scope="row"><a href="#"><img src="{{ $product->extra['image'] ?? '' }}" alt=""></a></th>
-                                    <td><a href="#" class="text-primary fw-bold">{{ $product->name }}</a></td>
+                                    <td><a href="{{ $product->extra['link'] ?? '#' }}" class="text-primary fw-bold" target="_blank">{{ $product->name }}</a></td>
                                     <td>{{ $product->ratings ?? '-'}}</td>
                                     <td>{{ $product->no_of_ratings ?? '-'}}</td>
-                                    <td>{{ $product->max_price }}</td>
-                                    <td>{{ $product->min_price }}</td>
+                                    <td>{{ $product->max_price ?? '-'}}</td>
+                                    <td>{{ $product->min_price ?? '-'}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

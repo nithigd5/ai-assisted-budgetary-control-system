@@ -22,19 +22,26 @@ class Product extends Model
             ->limit(5)
             ->where('user_id' , $user->id)
             ->latest()
-            ->whereNull('sentiment')->orWhere('sentiment' , '<>' , 'Positive');
+            ->whereNull('sentiment')->orWhere('sentiment' , '<>' , 'Positive')->get();
 
-        $product = $expenses->first()->product;
 
-        $products = Product::query()
-            ->where('type' , $product->type)
-            ->where('category', $product->category)
-            ->orderByRaw('ratings DESC NULLS LAST')
-            ->orderByRaw('no_of_ratings DESC NULLS LAST')
-            ->orWhereRaw('name like \'%?%\'' , $product->names)
-            ->limit(5)
-            ->get();
 
-        return $products;
+        $allProducts = collect();
+
+        foreach ($expenses as $expense){
+            $product = $expense->first()->product;
+
+            $products = Product::query()
+                ->where('type' , $product->type)
+                ->where('category', $product->category)
+                ->orderByRaw('ratings DESC NULLS LAST')
+                ->orderByRaw('no_of_ratings DESC NULLS LAST')
+                ->orWhereRaw('name like \'%?%\'' , $product->names)
+                ->limit(5)
+                ->get();
+            $allProducts = $allProducts->union($products);
+        }
+
+        return $allProducts;
     }
 }
