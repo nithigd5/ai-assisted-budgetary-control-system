@@ -546,14 +546,14 @@
                                 <th scope="col">Product</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Mode of Payment</th>
-                                <th scope="col">Mood</th>
+                                <th scope="col">Feedback</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($expenses as $expense)
                                 <tr>
-                                    <th scope="row"><a href="#">#{{ $expense->id }}</a></th>
-                                    <td><a href="#" class="text-primary">{{ $expense->product->name }}</a></td>
+                                    <th scope="row"><a href="#" target="_blank">#{{ $expense->id }}</a></th>
+                                    <td><a href="{{ $expense->product->extra['link'] ?? '#' }}" target="_blank" class="text-primary">{{ $expense->product->name }}</a></td>
                                     <td>₹{{ $expense->price }}</td>
                                     <td><span class="badge bg-warning text-dark">{{ $expense->mode }}</span>
                                     </td>
@@ -604,36 +604,23 @@
                             <tr>
                                 <th scope="col">Preview</th>
                                 <th scope="col">Product</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">Rating</th>
+                                <th scope="col"> No Of Ratings</th>
+                                <th scope="col">Max Price</th>
+                                <th scope="col">Min Price</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                                <td><a href="#" class="text-primary fw-bold">Shoe</a></td>
-                                <td>$5</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                                <td><a href="#" class="text-primary fw-bold">Watch</a></td>
-                                <td>$4</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                                <td><a href="#" class="text-primary fw-bold">Shampoo</a></td>
-                                <td>$6</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                                <td><a href="#" class="text-primary fw-bold">Coolers</a></td>
-                                <td>$3</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
-                                <td><a href="#" class="text-primary fw-bold">Headphone</a></td>
-                                <td>$100</td>
-                            </tr>
-
+                            @foreach($alternatives as $product)
+                                <tr>
+                                    <th scope="row"><a href="#"><img src="{{ $product->extra['image'] ?? '' }}" alt=""></a></th>
+                                    <td><a href="#" class="text-primary fw-bold">{{ $product->name }}</a></td>
+                                    <td>{{ $product->ratings ?? '-'}}</td>
+                                    <td>{{ $product->no_of_ratings ?? '-'}}</td>
+                                    <td>{{ $product->max_price }}</td>
+                                    <td>{{ $product->min_price }}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
 

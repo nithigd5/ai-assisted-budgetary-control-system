@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use App\Models\Expense;
 use App\Models\ExpensesBudget;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -65,11 +66,12 @@ class HomeController extends Controller
             return $data;
         });
 
+        $alternatives = Product::recommended(auth()->user());
 
 //        dd($forecastedExpenses->toArray());
 
         return view('home' , ['expenses' => $expenses ,
             'totalExpenses' => $totalExpenses , 'budget' => $budget , 'expense' , 'monthExpenses' => $monthExpenses ,
-            'expenseBudgetDataSet' => $expenseBudgetDataSet , 'forecastedExpenses' => $forecastedExpenses]);
+            'expenseBudgetDataSet' => $expenseBudgetDataSet , 'forecastedExpenses' => $forecastedExpenses, 'alternatives' => $alternatives]);
     }
 }
