@@ -70,6 +70,9 @@ class ExpenseController extends Controller
             $expensesBudget->save();
         }
 
+        $response = Http::timeout(5)->get(config('app.api_host').'/purchases/train_expenses' , ['user_id' => auth()->id()]);
+
+
         return redirect('/home')->with('success' , 'Expense Created Successfully');
     }
 
