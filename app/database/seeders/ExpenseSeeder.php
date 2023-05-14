@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Http;
 
 class ExpenseSeeder extends Seeder
 {
@@ -45,7 +46,10 @@ class ExpenseSeeder extends Seeder
             ]);
 
             ExpensesBudget::generate($budget);
-        }
 
+            $response = Http::timeout(5)->get(config('app.api_host').'/purchases/train_expenses' , ['user_id' => $user->id]);
+
+        }
+        
     }
 }
