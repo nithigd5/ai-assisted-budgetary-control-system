@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Budget;
 use App\Models\Expense;
+use App\Models\ExpensesBudget;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\CarbonPeriod;
@@ -42,8 +43,8 @@ class ExpenseSeeder extends Seeder
                 'other' => 2000,
                 'user_id' => $user->id
             ]);
-            $budget->generate();
 
+            ExpensesBudget::generate($budget);
         }
 
     }

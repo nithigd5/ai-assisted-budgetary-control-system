@@ -24,7 +24,7 @@ class BudgetController extends Controller
             $budget = Budget::query()->create(array_merge($validated , ['user_id' => auth()->id()]));
         }
 
-        $budget->generate();
+        ExpensesBudget::generate($budget);
 
         $response = Http::timeout(5)->get(config('app.api_host').'/purchases/train_expenses' , ['user_id' => auth()->id()]);
 

@@ -25,11 +25,11 @@ class ExpensesBudget extends Model
         'is_employed' ,
     ];
 
-    public function generate()
+    public static function generate($budget)
     {
         $month = CarbonPeriod::create(now()->startOfMonth() , now()->addMonth());
 
-        $dailyBasisBudget = $this->total();
+        $dailyBasisBudget = $budget->total();
 
         $days = now()->startOfMonth()->diffInDays(now()->addMonth());
 
