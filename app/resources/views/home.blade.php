@@ -160,7 +160,7 @@
 
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Savings <span>| This Month</span></h5>
+                                <h5 class="card-title">Balance Budget<span>| This Month</span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div
