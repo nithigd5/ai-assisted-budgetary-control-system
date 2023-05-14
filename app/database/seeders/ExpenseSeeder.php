@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Budget;
 use App\Models\Expense;
 use App\Models\Product;
 use App\Models\User;
@@ -32,5 +33,16 @@ class ExpenseSeeder extends Seeder
                 ]);
             }
         }
+
+        $budget = Budget::query()->create([
+            'food' => 3500,
+            'education' => 400,
+            'debts' => 6000,
+            'clothing' => 1000,
+            'mobile' => 500,
+            'other' => 2000,
+        ]);
+
+        $budget->generate();
     }
 }
