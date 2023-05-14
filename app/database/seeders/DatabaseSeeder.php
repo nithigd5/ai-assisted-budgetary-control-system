@@ -29,20 +29,22 @@ class DatabaseSeeder extends Seeder
             'email' => 'ameen@email.com',
         ]);
 
-//        Product::factory(10)->create();
+        Product::factory(10)->create();
+
+        $users = User::all();
+
+        foreach ($users as $user) {
+            Ticket::query()->insert(array_fill_keys([0, 1, 2], [
+                'title' => fake()->sentence, 'created_at' => now(), 'updated_at' => now(),
+                'message' => fake()->paragraph(2),
+                'user_id' => $user->id,
+                'assigned_to' => $user->id == ($id = fake()->randomElement([1,2])) ? $user->id + 1 : $id
+            ]));
+        }
 
 
-//        foreach ($users as $user) {
-//            Ticket::query()->insert(array_fill_keys([0, 1, 2], [
-//                'title' => fake()->sentence, 'created_at' => now(), 'updated_at' => now(),
-//                'message' => fake()->paragraph(2),
-//                'user_id' => $user->id,
-//                'assigned_to' => $user->id == ($id = fake()->randomElement([1,2])) ? $user->id + 1 : $id
-//            ]));
-//        }
-
-
-//        $this->call(ProductSeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(ExpenseSeeder::class);
 
     }
 }
