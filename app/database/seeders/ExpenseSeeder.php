@@ -32,17 +32,19 @@ class ExpenseSeeder extends Seeder
                     'product_id' => fake()->randomElement($products)['id']
                 ]);
             }
+
+            $budget = Budget::query()->create([
+                'food' => 3500,
+                'education' => 400,
+                'debts' => 6000,
+                'clothing' => 1000,
+                'mobile' => 500,
+                'other' => 2000,
+                'user_id' => $user->id
+            ]);
+            $budget->generate();
+
         }
 
-        $budget = Budget::query()->create([
-            'food' => 3500,
-            'education' => 400,
-            'debts' => 6000,
-            'clothing' => 1000,
-            'mobile' => 500,
-            'other' => 2000,
-        ]);
-
-        $budget->generate();
     }
 }
