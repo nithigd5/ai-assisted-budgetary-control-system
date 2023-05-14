@@ -168,7 +168,7 @@
                                         <i class="bi bi-currency-rupee"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>₹@currency($expenseBudgetDataSet->pluck('savings')->sum())</h6>
+                                        <h6>₹@currency($budget?->total() - $totalExpenses)</h6>
                                         {{--                                        <span class="text-success small pt-1 fw-bold">8%</span> <span--}}
                                         {{--                                            class="text-muted small pt-2 ps-1">Decrease</span>--}}
                                     </div>
