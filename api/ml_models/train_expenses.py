@@ -46,14 +46,6 @@ def select_model(dataset):
     return X_train, X_test, y_train, y_test
 
 
-def train(x_train, y_train):
-    # Fitting the Multiple Linear Regression model
-    mlr = LinearRegression()
-    mlr.fit(x_train, y_train)
-
-    return mlr
-
-
 def predict(user_id):
     data = dataset(user_id)
 
