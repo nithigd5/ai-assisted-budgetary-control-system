@@ -35,7 +35,7 @@ class ExpensesBudget extends Model
 
         $dailyBasisBudget = $dailyBasisBudget / $days;
 
-        $monthExpenses = Expense::query()->where('user_id' , auth()->id())
+        $monthExpenses = Expense::query()->where('user_id' , $budget->user->id)
             ->selectRaw('sum(price) as price, CAST(created_at as date) as created_at')
             ->whereBetween('created_at' , [now()->startOfMonth() , now()->addMonth()])
             ->groupBy(DB::raw('2'))
@@ -47,15 +47,15 @@ class ExpensesBudget extends Model
             $expense = ExpensesBudget::query()->whereRaw('CAST(created_at as date) = ?' , $date->toDateString())->first();
 
             $data = [
-                'user_id' => auth()->id() ,
+                'user_id' => $budget->user->id ,
                 'created_at' => $date ,
                 'day' => $date->day ,
                 'day_name' => $date->getTranslatedDayName() ,
                 'expense' => round($monthExpenses->where('created_at' , '=' , $date)->first()?->price ?? 0 , 2),
                 'actual_budget' => round($dailyBasisBudget , 2),
                 'estimated_budget' => null,
-                'age' => now()->diffInYears(auth()->user()->date_of_birth) ,
-                'is_employed' => auth()->user()->is_employed ?? false ,
+                'age' => now()->diffInYears($budget->user->date_of_birth) ,
+                'is_employed' => $budget->user->is_employed ?? false ,
             ];
 
             if (!$expense) {
