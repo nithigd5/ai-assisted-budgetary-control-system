@@ -39,7 +39,7 @@ class ExpensesBudgetDataTable extends DataTable
      */
     public function query(ExpensesBudget $model): QueryBuilder
     {
-        return $model->newQuery()->where('user_id', auth()->id());
+        return $model->newQuery()->where('user_id', auth()->id())->latest();
     }
 
     /**

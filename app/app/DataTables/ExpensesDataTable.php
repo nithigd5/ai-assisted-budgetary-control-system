@@ -75,7 +75,7 @@ class ExpensesDataTable extends DataTable
             Column::make('product_name')->title('Product')->data('product.name')->searchable(true)->orderable(true),
             Column::make('price')->title('Price'),
             Column::make('mode')->title('Payment Mode'),
-            Column::make('created_at')->title('Created At')->orderable(true)->orderable(true),
+            Column::make('created_at')->title('Purchased At')->orderable(true)->orderable(true),
         ];
     }
 
