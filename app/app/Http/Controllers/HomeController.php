@@ -38,7 +38,7 @@ class HomeController extends Controller
             ->latest()->get()->take(5);
 
         $totalExpenses = Expense::with('product')->where('user_id' , auth()->id())
-            ->whereBetween('created_at' , [now()->startOfMonth() , now()->endOfMonth()])->sum('price');
+            ->whereBetween('created_at' , [now()->startOfMonth() , now()])->sum('price');
 
         $budget = Budget::query()->whereBetween('created_at' , [now()->startOfMonth() , now()->endOfMonth()])->first();
 
