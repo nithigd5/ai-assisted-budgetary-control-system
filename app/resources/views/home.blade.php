@@ -157,8 +157,23 @@
                                     <li><a class="dropdown-item" href="#">This Month</a></li>
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
                                 </ul>
-                            </div>
 
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Savings <span>| This Month</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-currency-rupee"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>₹@currency($expenseBudgetDataSet->pluck('savings')->sum())</h6>
+                                        {{--                                        <span class="text-success small pt-1 fw-bold">8%</span> <span--}}
+                                        {{--                                            class="text-muted small pt-2 ps-1">Decrease</span>--}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div><!-- End Budget Card -->
 
